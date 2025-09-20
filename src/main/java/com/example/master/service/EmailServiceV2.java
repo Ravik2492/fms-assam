@@ -19,9 +19,9 @@ import java.io.InputStream;
 import java.util.Map;
 
 @Service
-public class EmailService {
+public class EmailServiceV2 {
 
-    private static final Logger log = LoggerFactory.getLogger(EmailService.class);
+    private static final Logger log = LoggerFactory.getLogger(EmailServiceV2.class);
     @Autowired
     private JavaMailSender mailSender;
 
@@ -33,7 +33,7 @@ public class EmailService {
 
     private final ObjectMapper mapper;
 
-    public EmailService(ObjectMapper mapper) {
+    public EmailServiceV2(ObjectMapper mapper) {
         this.mapper = mapper;
     }
 

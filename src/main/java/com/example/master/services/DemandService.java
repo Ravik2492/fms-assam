@@ -3,14 +3,14 @@ package com.example.master.services;
 import com.example.master.Dto.DemandDTO;
 import com.example.master.Dto.DemandResponseDTO;
 import com.example.master.model.Demand;
-
+import org.springframework.web.multipart.MultipartFile;
 
 
 import java.util.List;
 import java.util.Optional;
 
 public interface DemandService {
-    Demand createDemand(DemandDTO dto);
+    Demand createDemand(DemandDTO dto, MultipartFile authorizationDoc, MultipartFile authorizationDocFci);
     List<DemandResponseDTO> getAllDemands();
     Optional<DemandResponseDTO> getDemandById(Long id);
     void deleteDemand(Long id);

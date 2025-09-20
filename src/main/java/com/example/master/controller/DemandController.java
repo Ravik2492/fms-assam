@@ -13,6 +13,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Map;
@@ -38,9 +39,11 @@ public class DemandController {
     // DWCD creates demand
     @PreAuthorize("hasAnyRole('ADMIN','DWCD')")
     @PostMapping
-    public ResponseEntity<DemandResponseDTO> createDemand(@RequestBody DemandDTO dto) {
+    public ResponseEntity<DemandResponseDTO> createDemand(@RequestPart DemandDTO dto,
+                                                          @RequestPart("authorizationDoc") MultipartFile authorizationDoc,
+                                                          @RequestPart("authorizationDocFci") MultipartFile authorizationDocFci) {
         logCurrentUserAuthorities("createDemand");
-        Demand savedDemand = demandService.createDemand(dto);
+        Demand savedDemand = demandService.createDemand(dto, authorizationDoc, authorizationDocFci);
 
         DemandResponseDTO response = mapToResponseDTO(savedDemand);
 

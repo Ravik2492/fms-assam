@@ -8,10 +8,12 @@ import com.example.master.event.DemandEventPublisher;
 import com.example.master.exception.NotFoundException;
 import com.example.master.model.*;
 import com.example.master.repository.*;
+import com.example.master.service.FileStorageService;
 import com.example.master.services.DemandService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
 import java.util.*;
@@ -34,6 +36,9 @@ public class DemandServiceImpl implements DemandService {
 
     @Autowired
     private ProjectRepository projectRepository;
+
+    @Autowired
+    private FileStorageService fileStorageService;
 
     public DemandServiceImpl(
             DemandRepository demandRepository,
@@ -61,15 +66,17 @@ public class DemandServiceImpl implements DemandService {
     }
 
     @Override
-    public Demand createDemand(DemandDTO dto) {
+    public Demand createDemand(DemandDTO dto, MultipartFile authorizationDoc, MultipartFile authorizationDocFci) {
         Demand demand = new Demand();
         demand.setDescription(dto.getDescription());
         demand.setStatus(dto.getStatus() != null ? dto.getStatus() : "PENDING");
         demand.setFromDate(dto.getFromDate());
         demand.setToDate(dto.getToDate());
         demand.setTotalDays(dto.getTotalDays());
-        demand.setFciDocs(dto.getFciDocs());
-        demand.setSupplierDocs(dto.getSupplierDocs());
+        //demand.setFciDocs(dto.getFciDocs());
+        //demand.setSupplierDocs(dto.getSupplierDocs());
+        demand.setFciDocs(fileStorageService.storeFile(authorizationDoc));
+        demand.setSupplierDocs(fileStorageService.storeFile(authorizationDocFci));
         demand.setNotes(dto.getNotes());
         demand.setCreatedAt(LocalDateTime.now());
         demand.setUpdatedAt(LocalDateTime.now());

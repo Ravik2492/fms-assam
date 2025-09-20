@@ -1,6 +1,6 @@
 package com.example.master.controller;
 
-import com.example.master.entity.AwcCenter;
+import com.example.master.entity.AwcCenterr;
 import com.example.master.service.AwcCenterService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -22,14 +22,14 @@ public class AwcCenterController {
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     @Operation(summary = "Create New AWC")
-    public AwcCenter addCenter(@RequestBody AwcCenter center) {
+    public AwcCenterr addCenter(@RequestBody AwcCenterr center) {
         return service.addCenter(center);
     }
 
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{id}")
     @Operation(summary = "Update AWC")
-    public AwcCenter updateCenter(@PathVariable Long id, @RequestBody AwcCenter center) {
+    public AwcCenterr updateCenter(@PathVariable Long id, @RequestBody AwcCenterr center) {
         return service.updateCenter(id, center);
     }
 
@@ -43,14 +43,14 @@ public class AwcCenterController {
     @PreAuthorize("hasAnyRole('ADMIN','AWC','NODAL','SUPPLIER')")
     @GetMapping
     @Operation(summary = "List AWCs")
-    public List<AwcCenter> listCenters() {
+    public List<AwcCenterr> listCenters() {
         return service.listCenters();
     }
 
     @PreAuthorize("hasAnyRole('ADMIN','AWC','NODAL','SUPPLIER')")
     @GetMapping("/byDistrictSectorAndProjectIds")
     @Operation(summary = "List AWC centers by District, Sector, and Project IDs")
-    public List<AwcCenter> listAWCCenters(
+    public List<AwcCenterr> listAWCCenters(
             @RequestParam(required = false) List<Long> districtIds,
             @RequestParam(required = false) List<Long> sectorIds,
             @RequestParam(required = false) List<Long> projectIds) {

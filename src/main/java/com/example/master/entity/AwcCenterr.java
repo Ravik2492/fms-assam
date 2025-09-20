@@ -4,9 +4,9 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 @Entity
-@Table(name = "awc_centers")
+@Table(name = "awc_centerss")
 @Data
-public class AwcCenter {
+public class AwcCenterr {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

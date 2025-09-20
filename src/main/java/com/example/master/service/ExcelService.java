@@ -3,7 +3,7 @@ package com.example.master.service;
 import com.example.master.dtobj.AwcCsvRow;
 import com.example.master.dtobj.DemandDetailDto;
 import com.example.master.dtobj.DemandRequestDto;
-import com.example.master.entity.AwcCenter;
+import com.example.master.entity.AwcCenterr;
 import com.example.master.repository.AwcCenterRepository;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -47,7 +47,7 @@ public class ExcelService {
                 String[] parts = line.split("\t"); // tab-separated
                 AwcCsvRow row = new AwcCsvRow();
                 row.setCenterId(parts.length > 0 ? parts[0].trim() : null);
-                AwcCenter center = awcRepo.findByCenterId(row.getCenterId()).orElseThrow(() -> new RuntimeException("No AWC center found with Center ID: "+row.getCenterId()));;
+                AwcCenterr center = awcRepo.findByCenterId(row.getCenterId()).orElseThrow(() -> new RuntimeException("No AWC center found with Center ID: "+row.getCenterId()));;
                 row.setId(center.getId());
                 row.setCenterName(center.getCenterName());
                 // Populate distinct maps

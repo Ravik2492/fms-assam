@@ -2,7 +2,7 @@ package com.example.master.service;
 
 import com.example.master.dtobj.KcUser;
 import com.example.master.dtobj.LookupType;
-import com.example.master.entity.AwcCenter;
+import com.example.master.entity.AwcCenterr;
 import com.example.master.repository.AwcCenterRepository;
 import com.example.master.repository.DistrictRepository;
 import com.example.master.repository.ProjectRepository;
@@ -34,7 +34,7 @@ public class AwcCenterService {
         this.sectorRepo = sectorRepo;
     }
 
-    public AwcCenter addCenter(AwcCenter center) {
+    public AwcCenterr addCenter(AwcCenterr center) {
         if (awcRepo.existsByCenterId(center.getCenterId())) {
             throw new IllegalArgumentException("Center ID already exists");
         }
@@ -54,8 +54,8 @@ public class AwcCenterService {
         return awcRepo.save(center);
     }
 
-    public AwcCenter updateCenter(Long id, AwcCenter updated) {
-        AwcCenter existing = awcRepo.findById(id)
+    public AwcCenterr updateCenter(Long id, AwcCenterr updated) {
+        AwcCenterr existing = awcRepo.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("AWC Center not found"));
 
         existing.setCenterId(updated.getCenterId());
@@ -80,11 +80,11 @@ public class AwcCenterService {
         awcRepo.deleteById(id);
     }
 
-    public List<AwcCenter> listCenters() {
+    public List<AwcCenterr> listCenters() {
         return awcRepo.findAll();
     }
 
-    public List<AwcCenter> findByFilters(List<Long> districtIds, List<Long> sectorIds, List<Long> projectIds) {
+    public List<AwcCenterr> findByFilters(List<Long> districtIds, List<Long> sectorIds, List<Long> projectIds) {
         return awcRepo.findByFilters(districtIds, sectorIds, projectIds);
     }
 

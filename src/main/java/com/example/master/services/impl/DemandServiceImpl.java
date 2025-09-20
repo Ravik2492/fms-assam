@@ -283,12 +283,12 @@ public class DemandServiceImpl implements DemandService {
         // 1. Get current Keycloak userId (UUID)
         String keycloakUserId = keycloakUserService.getCurrentUserId();
 
-        // 2. Find supplier from DB using that UUID
+        /*// 2. Find supplier from DB using that UUID
         Supplier supplier = supplierRepository.findByKeycloakUserId(keycloakUserId)
-                .orElseThrow(() -> new RuntimeException("Supplier not found for user " + keycloakUserId));
+                .orElseThrow(() -> new RuntimeException("Supplier not found for user " + keycloakUserId));*/
 
         // 3. Fetch demands by supplier.id
-        return demandRepository.findAcceptedDemandsForSupplier(supplier.getId())
+        return demandRepository.findAcceptedDemandsForSupplier(keycloakUserId)
                 .stream()
                 .map(this::convertToDTO)
                 .toList();

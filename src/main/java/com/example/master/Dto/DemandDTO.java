@@ -17,7 +17,7 @@ public class DemandDTO {
     private Long beneficiaryId;
     private Long fciId;
     private String fciDocs;
-    private Long supplierId;
+    private String supplierId;
     private String supplierDocs;
     private Long districtId;
 
@@ -109,11 +109,11 @@ public class DemandDTO {
         this.fciDocs = fciDocs;
     }
 
-    public Long getSupplierId() {
+    public String getSupplierId() {
         return supplierId;
     }
 
-    public void setSupplierId(Long supplierId) {
+    public void setSupplierId(String supplierId) {
         this.supplierId = supplierId;
     }
 

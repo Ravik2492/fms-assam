@@ -46,9 +46,6 @@ public class SupplierMappingServiceImpl implements SupplierMappingService {
         Demand demand = demandRepository.findById(demandId)
                 .orElseThrow(() -> new NotFoundException("Demand not found"));
 
-        Supplier supplier = supplierRepository.findById(dto.getSupplierId())
-                .orElseThrow(() -> new NotFoundException("Supplier not found"));
-
         District district = districtRepository.findById(dto.getDistrictId())
                 .orElseThrow(() -> new NotFoundException("District not found"));
 
@@ -57,7 +54,7 @@ public class SupplierMappingServiceImpl implements SupplierMappingService {
 
         SupplierMapping mapping = new SupplierMapping();
         mapping.setDemand(demand);
-        mapping.setSupplier(supplier);
+        mapping.setSupplier(dto.getSupplierId());
         //mapping.setDistrict(district);
         mapping.setCdpos(cdpos);
         //mapping.setSectors(sectors);

@@ -90,8 +90,8 @@ public class DemandController {
         // 🔹 supplier
         if (demand.getSupplier() != null) {
             SupplierDTO sup = new SupplierDTO();
-            sup.setId(demand.getSupplier().getId());
-            sup.setName(demand.getSupplier().getName());
+            sup.setId(demand.getSupplier());
+            sup.setName(demand.getSupplierName());
             dto.setSupplier(sup);
         }
 

@@ -94,8 +94,7 @@ public class DemandServiceImpl implements DemandService {
 
         // 🔹 Map Supplier
         if (dto.getSupplierId() != null) {
-            demand.setSupplier(supplierRepository.findById(dto.getSupplierId())
-                    .orElseThrow(() -> new RuntimeException("Supplier not found")));
+            demand.setSupplier(dto.getSupplierId());
         }
 
         // 🔹 Map District
@@ -350,8 +349,8 @@ public class DemandServiceImpl implements DemandService {
         // 🔹 supplier
         if (demand.getSupplier() != null) {
             SupplierDTO sup = new SupplierDTO();
-            sup.setId(demand.getSupplier().getId());
-            sup.setName(demand.getSupplier().getName());
+            sup.setId(demand.getSupplier());
+            sup.setName(demand.getSupplierName());
             dto.setSupplier(sup);
         }
 

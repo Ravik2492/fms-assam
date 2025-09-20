@@ -3,27 +3,27 @@ package com.example.master.Dto;
 import java.util.List;
 
 public class SupplierMappingDTO {
-    private Long id;
-    private Long supplierId;
+    private String id;
+    private String supplierId;
     private Long districtId;
     private List<Long> cdpoIds;
     private List<Long> sectorIds;
 
     // Getters & Setters
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
-    public Long getSupplierId() {
+    public String getSupplierId() {
         return supplierId;
     }
 
-    public void setSupplierId(Long supplierId) {
+    public void setSupplierId(String supplierId) {
         this.supplierId = supplierId;
     }
 

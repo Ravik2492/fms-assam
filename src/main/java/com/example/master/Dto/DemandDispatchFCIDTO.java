@@ -5,12 +5,12 @@ public class DemandDispatchFCIDTO {
     private Long id;
     private Integer dispatchQuantity;
     private String remarks;
-    private Long supplierId;
+    private String supplierId;
     private Long warehouseId;
     private Long demandId;
 
     // Constructors, Getters, and Setters
-    public DemandDispatchFCIDTO(Long id, Integer dispatchQuantity, String remarks, Long supplierId, Long warehouseId, Long demandId) {
+    public DemandDispatchFCIDTO(Long id, Integer dispatchQuantity, String remarks, String supplierId, Long warehouseId, Long demandId) {
         this.id = id;
         this.dispatchQuantity = dispatchQuantity;
         this.remarks = remarks;
@@ -43,11 +43,11 @@ public class DemandDispatchFCIDTO {
         this.remarks = remarks;
     }
 
-    public Long getSupplierId() {
+    public String getSupplierId() {
         return supplierId;
     }
 
-    public void setSupplierId(Long supplierId) {
+    public void setSupplierId(String supplierId) {
         this.supplierId = supplierId;
     }
 

@@ -38,10 +38,20 @@ public class Demand {
     private Fci fci;
     private String fciDocs;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "supplier_id")
-    private Supplier supplier;
+    @Column(name = "supplier_id")
+    private String supplier;
+
+    @Column(name = "supplier_name")
+    private String supplierName;
     private String supplierDocs;
+
+    public String getSupplierName() {
+        return supplierName;
+    }
+
+    public void setSupplierName(String supplierName) {
+        this.supplierName = supplierName;
+    }
 
     // Workflow timestamps
     private LocalDateTime fciAcceptedAt;
@@ -286,11 +296,11 @@ public class Demand {
         this.fci = fci;
     }
 
-    public Supplier getSupplier() {
+    public String getSupplier() {
         return supplier;
     }
 
-    public void setSupplier(Supplier supplier) {
+    public void setSupplier(String supplier) {
         this.supplier = supplier;
     }
 

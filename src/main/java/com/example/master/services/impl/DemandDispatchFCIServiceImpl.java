@@ -30,20 +30,20 @@ public class DemandDispatchFCIServiceImpl implements DemandDispatchFCIService {
 
     @Override
     public DemandDispatchFCIDTO createDemandDispatch(DemandDispatchFCIDTO demandDispatchFCIDTO) {
-        Supplier supplier = supplierRepository.findById(demandDispatchFCIDTO.getSupplierId()).orElseThrow(() -> new RuntimeException("Supplier not found"));
+
         Warehouse warehouse = warehouseRepository.findById(demandDispatchFCIDTO.getWarehouseId()).orElseThrow(() -> new RuntimeException("Warehouse not found"));
         Demand demand = demandRepository.findById(demandDispatchFCIDTO.getDemandId()).orElseThrow(() -> new RuntimeException("Demand not found"));
 
         DemandDispatchFCI demandDispatchFCI = new DemandDispatchFCI();
         demandDispatchFCI.setDispatchQuantity(demandDispatchFCIDTO.getDispatchQuantity());
         demandDispatchFCI.setRemarks(demandDispatchFCIDTO.getRemarks());
-        demandDispatchFCI.setSupplier(supplier);
+        demandDispatchFCI.setSupplier(demandDispatchFCIDTO.getSupplierId());
         demandDispatchFCI.setWarehouse(warehouse);
         demandDispatchFCI.setDemand(demand);
 
         demandDispatchFCI = demandDispatchFCIRepository.save(demandDispatchFCI);
 
         return new DemandDispatchFCIDTO(demandDispatchFCI.getId(), demandDispatchFCI.getDispatchQuantity(), demandDispatchFCI.getRemarks(),
-                demandDispatchFCI.getSupplier().getId(), demandDispatchFCI.getWarehouse().getId(), demandDispatchFCI.getDemand().getId());
+                demandDispatchFCI.getSupplier(), demandDispatchFCI.getWarehouse().getId(), demandDispatchFCI.getDemand().getId());
     }
 }

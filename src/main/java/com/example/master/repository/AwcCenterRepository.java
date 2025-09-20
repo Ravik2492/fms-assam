@@ -12,7 +12,7 @@ public interface AwcCenterRepository extends JpaRepository<AwcCenterr, Long> {
     boolean existsByCenterId(String centerId);
     Optional<AwcCenterr> findByCenterId(String centerId);
 
-    @Query("SELECT a FROM AwcCenter a WHERE "
+    @Query("SELECT a FROM AwcCenterr a WHERE "
             + "(:districtIds IS NULL OR a.district.id IN :districtIds) AND "
             + "(:sectorIds IS NULL OR a.sector.id IN :sectorIds) AND "
             + "(:projectIds IS NULL OR a.project.id IN :projectIds)")

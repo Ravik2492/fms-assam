@@ -1,5 +1,6 @@
 package com.example.master.entity;
 
+import com.example.master.dtobj.CDPOs;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -19,7 +20,7 @@ public class District {
     private String districtName;
 
     @Transient
-    private List<Project> cdpos = new ArrayList<>();
+    private List<CDPOs> cdpos = new ArrayList<>();
 
 }
 

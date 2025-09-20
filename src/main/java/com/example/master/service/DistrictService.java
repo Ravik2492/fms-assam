@@ -1,5 +1,6 @@
 package com.example.master.service;
 
+import com.example.master.dtobj.CDPOs;
 import com.example.master.entity.District;
 import com.example.master.entity.Project;
 import com.example.master.repository.DistrictRepository;
@@ -7,6 +8,7 @@ import com.example.master.repository.ProjectRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -47,9 +49,16 @@ public class DistrictService {
 
         for (District district : districts) {
             List<Project> projects = projectRepository.findByDistrictIdIn(
-                    Collections.singletonList(district.getId())
-            );
-            district.setCdpos(projects);
+                    Collections.singletonList(district.getId()));
+            List<CDPOs> cdposList = new ArrayList<>();
+            for (Project project : projects) {
+                CDPOs cdpo = new CDPOs();
+                cdpo.setId(project.getId()); // or project.getCdpoId() if available
+                cdpo.setCdpoName(project.getProjectName()); // adjust based on your Project model
+                cdposList.add(cdpo);
+            }
+
+            district.setCdpos(cdposList);
         }
 
         return districts;

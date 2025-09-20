@@ -8,6 +8,8 @@ public enum Role {
     SUPERVISOR,
     CDPO,
     DPO,
+    DWCD,
+    FCI,
     UNKNOWN
 }
 

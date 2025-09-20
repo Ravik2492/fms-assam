@@ -14,8 +14,8 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @OpenAPIDefinition(
         servers = {
-                @Server(url = "/api/", description = "Dev Server"),
-                @Server(url = "https://13.233.95.99/api/", description = "Stage server"),
+                @Server(url = "/assam/", description = "Dev Server"),
+                @Server(url = "https://13.233.95.99/assam/", description = "Stage server"),
                 @Server(url = "https://3.94.110.104/fms/", description = "Stage server2")
         }
 )

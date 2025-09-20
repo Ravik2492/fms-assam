@@ -21,7 +21,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/v2")
 @Tag(name = "FMS RJ", description = "APIs to control user operations")
 public class UserController {
 

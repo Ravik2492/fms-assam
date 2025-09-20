@@ -15,6 +15,8 @@ public class User {
     private String keycloakUserId;
 
     private String name;
+
+    private String username;
     private String email;
     private String mobile;
     private String district;

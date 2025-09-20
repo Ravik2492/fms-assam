@@ -1,9 +1,14 @@
 package com.example.master.entity;
 
 import jakarta.persistence.*;
+import lombok.Data;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "districts")
+@Data
 public class District {
 
     @Id
@@ -13,11 +18,8 @@ public class District {
     @Column(name = "district_name", nullable = false, unique = true)
     private String districtName;
 
-    // Getters and setters
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
+    @Transient
+    private List<Project> cdpos = new ArrayList<>();
 
-    public String getDistrictName() { return districtName; }
-    public void setDistrictName(String districtName) { this.districtName = districtName; }
 }
 

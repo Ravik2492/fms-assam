@@ -1,6 +1,7 @@
 package com.example.master.model;
 
 import com.example.master.entity.District;
+import com.example.master.entity.Project;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
@@ -20,7 +21,7 @@ public class DemandCdpoDetail {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "cdpo_id", nullable = false)
-    private Cdpo cdpo;
+    private Project cdpo;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "district_id", nullable = false)
@@ -56,11 +57,11 @@ public class DemandCdpoDetail {
         Quantity = quantity;
     }
 
-    public Cdpo getCdpo() {
+    public Project getCdpo() {
         return cdpo;
     }
 
-    public void setCdpo(Cdpo cdpo) {
+    public void setCdpo(Project cdpo) {
         this.cdpo = cdpo;
     }
 

@@ -2,7 +2,7 @@ package com.example.master.services.impl;
 
 import com.example.master.Dto.AnganwadiCenterDTO;
 import com.example.master.Dto.SectorDTO;
-import com.example.master.model.Cdpo;
+import com.example.master.model.Cdpos;
 import com.example.master.model.Sector;
 import com.example.master.repository.CdpoRepository;
 import com.example.master.repository.SectorRepository;
@@ -25,7 +25,7 @@ public class SectorServiceImpl implements SectorService {
 
     @Override
     public SectorDTO createSector(SectorDTO sectorDTO) {
-        Cdpo cdpo = cdpoRepository.findById(sectorDTO.getCdpoId())
+        Cdpos cdpo = cdpoRepository.findById(sectorDTO.getCdpoId())
                 .orElseThrow(() -> new RuntimeException("Cdpo not found"));
 
         Sector sector = new Sector();

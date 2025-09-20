@@ -9,6 +9,7 @@ import com.example.master.exception.NotFoundException;
 import com.example.master.model.*;
 import com.example.master.repository.*;
 import com.example.master.services.DemandService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -30,6 +31,9 @@ public class DemandServiceImpl implements DemandService {
     private final DemandCategoryRepository demandCategoryRepository;
     private final BeneficiaryRepository beneficiaryRepository;
     private final FciRepository fciRepository;
+
+    @Autowired
+    private ProjectRepository projectRepository;
 
     public DemandServiceImpl(
             DemandRepository demandRepository,
@@ -105,7 +109,7 @@ public class DemandServiceImpl implements DemandService {
             List<DemandCdpoDetail> cdpoDetails = dto.getCdpoDetails().stream().map(cdpoDto -> {
                 DemandCdpoDetail detail = new DemandCdpoDetail();
                 detail.setDemand(demand);
-                detail.setCdpo(cdpoRepository.findById(cdpoDto.getCdpoId())
+                detail.setCdpo(projectRepository.findById(cdpoDto.getCdpoId())
                         .orElseThrow(() -> new RuntimeException("CDPO not found")));
                 detail.setDistrict(districtRepository.findById(cdpoDto.getDistrictId())
                         .orElseThrow(() -> new RuntimeException("District not found")));
@@ -373,7 +377,7 @@ public class DemandServiceImpl implements DemandService {
                 DemandCdpoDetailResponseDTO cdpoDto = new DemandCdpoDetailResponseDTO();
                 cdpoDto.setId(cdpo.getId());
                 cdpoDto.setCdpoId(cdpo.getCdpo().getId());
-                cdpoDto.setCdpoName(cdpo.getCdpo().getCdpoName());
+                cdpoDto.setCdpoName(cdpo.getCdpo().getProjectName());
                 cdpoDto.setDistrictId(cdpo.getDistrict().getId());
                 cdpoDto.setDistrictName(cdpo.getDistrict().getDistrictName());
                 cdpoDto.setQuantity(cdpo.getQuantity());

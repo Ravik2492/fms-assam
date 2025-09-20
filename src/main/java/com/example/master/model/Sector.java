@@ -18,7 +18,7 @@ public class Sector {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "cdpo_id", nullable = false)
     @JsonBackReference
-    private Cdpo cdpo;
+    private Cdpos cdpo;
 
     @Column(nullable = false)
     private String name;
@@ -69,8 +69,8 @@ public class Sector {
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
-    public Cdpo getCdpo() { return cdpo; }
-    public void setCdpo(Cdpo cdpo) { this.cdpo = cdpo; }
+    public Cdpos getCdpo() { return cdpo; }
+    public void setCdpo(Cdpos cdpo) { this.cdpo = cdpo; }
 
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }

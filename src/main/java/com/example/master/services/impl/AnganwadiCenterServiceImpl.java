@@ -3,7 +3,7 @@ package com.example.master.services.impl;
 import com.example.master.Dto.AnganwadiCenterDTO;
 import com.example.master.model.AnganwadiCenter;
 import com.example.master.model.Supervisor;
-import com.example.master.model.Cdpo;
+import com.example.master.model.Cdpos;
 import com.example.master.repository.AnganwadiCenterRepository;
 import com.example.master.repository.SupervisorRepository;
 import com.example.master.repository.CdpoRepository;
@@ -48,7 +48,7 @@ public class AnganwadiCenterServiceImpl implements AnganwadiCenterService {
         }
 
         if (dto.getCdpoId() != null) {
-            Cdpo cdpo = cdpoRepository.findById(dto.getCdpoId())
+            Cdpos cdpo = cdpoRepository.findById(dto.getCdpoId())
                     .orElseThrow(() -> new RuntimeException("CDPO not found"));
             entity.setCdpo(cdpo);
             dto.setCdpoId(cdpo.getId());  // Add this line
@@ -83,7 +83,7 @@ public class AnganwadiCenterServiceImpl implements AnganwadiCenterService {
         }
 
         if (dto.getCdpoId() != null) {
-            Cdpo cdpo = cdpoRepository.findById(dto.getCdpoId())
+            Cdpos cdpo = cdpoRepository.findById(dto.getCdpoId())
                     .orElseThrow(() -> new RuntimeException("CDPO not found"));
             entity.setCdpo(cdpo);
             dto.setCdpoId(cdpo.getId());

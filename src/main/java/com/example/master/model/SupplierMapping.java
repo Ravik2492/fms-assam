@@ -37,7 +37,7 @@ public class SupplierMapping {
             joinColumns = @JoinColumn(name = "supplier_mapping_id"),
             inverseJoinColumns = @JoinColumn(name = "cdpo_id")
     )
-    private List<Cdpo> cdpos;
+    private List<Cdpos> cdpos;
 
     // Multiple Sectors per supplier mapping
     @ManyToMany(fetch = FetchType.LAZY)
@@ -83,11 +83,11 @@ public class SupplierMapping {
         this.district = district;
     }
 
-    public List<Cdpo> getCdpos() {
+    public List<Cdpos> getCdpos() {
         return cdpos;
     }
 
-    public void setCdpos(List<Cdpo> cdpos) {
+    public void setCdpos(List<Cdpos> cdpos) {
         this.cdpos = cdpos;
     }
 

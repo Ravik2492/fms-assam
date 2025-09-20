@@ -3,7 +3,7 @@ package com.example.master.services.impl;
 import com.example.master.Dto.SupplierMappingDTO;
 import com.example.master.exception.NotFoundException;
 import com.example.master.entity.*;
-import com.example.master.model.Cdpo;
+import com.example.master.model.Cdpos;
 import com.example.master.model.Demand;
 import com.example.master.model.Supplier;
 import com.example.master.model.SupplierMapping;
@@ -52,7 +52,7 @@ public class SupplierMappingServiceImpl implements SupplierMappingService {
         District district = districtRepository.findById(dto.getDistrictId())
                 .orElseThrow(() -> new NotFoundException("District not found"));
 
-        List<Cdpo> cdpos = cdpoRepository.findAllById(dto.getCdpoIds());
+        List<Cdpos> cdpos = cdpoRepository.findAllById(dto.getCdpoIds());
         List<Sectorr> sectors = sectorRepository.findAllById(dto.getSectorIds());
 
         SupplierMapping mapping = new SupplierMapping();

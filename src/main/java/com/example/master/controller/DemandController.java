@@ -117,7 +117,7 @@ public class DemandController {
                 DemandCdpoDetailResponseDTO cdpoDto = new DemandCdpoDetailResponseDTO();
                 cdpoDto.setId(cdpo.getId());
                 cdpoDto.setCdpoId(cdpo.getCdpo().getId());
-                cdpoDto.setCdpoName(cdpo.getCdpo().getCdpoName());
+                cdpoDto.setCdpoName(cdpo.getCdpo().getProjectName());
                 cdpoDto.setDistrictId(cdpo.getDistrict().getId());
                 cdpoDto.setDistrictName(cdpo.getDistrict().getDistrictName());
                 cdpoDto.setQuantity(cdpo.getQuantity());

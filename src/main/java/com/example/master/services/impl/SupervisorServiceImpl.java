@@ -1,6 +1,6 @@
 package com.example.master.services.impl;
 
-import com.example.master.model.Cdpo;
+import com.example.master.model.Cdpos;
 import com.example.master.model.Supervisor;
 import com.example.master.repository.CdpoRepository;
 import com.example.master.repository.SupervisorRepository;
@@ -23,7 +23,7 @@ public class SupervisorServiceImpl implements SupervisorService {
     @Override
     public Supervisor createSupervisor(Supervisor supervisor, Long cdpoId) {
         // Fetch managed Cdpo from DB
-        Cdpo cdpo = cdpoRepository.findById(cdpoId)
+        Cdpos cdpo = cdpoRepository.findById(cdpoId)
                 .orElseThrow(() -> new RuntimeException("Cdpo not found with id: " + cdpoId));
 
         supervisor.setCdpo(cdpo); // attach managed entity

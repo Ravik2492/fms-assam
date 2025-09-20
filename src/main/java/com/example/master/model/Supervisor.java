@@ -19,7 +19,7 @@ public class Supervisor {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "cdpo_id")
     @JsonBackReference
-    private Cdpo cdpo;
+    private Cdpos cdpo;
 
     @OneToMany(mappedBy = "supervisor")
     @JsonManagedReference
@@ -44,11 +44,11 @@ public class Supervisor {
         this.name = name;
     }
 
-    public Cdpo getCdpo() {
+    public Cdpos getCdpo() {
         return cdpo;
     }
 
-    public void setCdpo(Cdpo cdpo) {
+    public void setCdpo(Cdpos cdpo) {
         this.cdpo = cdpo;
     }
 

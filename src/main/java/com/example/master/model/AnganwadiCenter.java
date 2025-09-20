@@ -28,7 +28,7 @@ public class AnganwadiCenter {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "cdpo_id")
     @JsonBackReference
-    private Cdpo cdpo;
+    private Cdpos cdpo;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "sector_id")
@@ -93,11 +93,11 @@ public class AnganwadiCenter {
         this.supervisor = supervisor;
     }
 
-    public Cdpo getCdpo() {
+    public Cdpos getCdpo() {
         return cdpo;
     }
 
-    public void setCdpo(Cdpo cdpo) {
+    public void setCdpo(Cdpos cdpo) {
         this.cdpo = cdpo;
     }
 

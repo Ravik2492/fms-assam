@@ -2,16 +2,14 @@ package com.example.master.model;
 
 import com.example.master.entity.District;
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import java.util.List;
 
 @Entity
 @Table(name = "cdpos")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-public class Cdpo {
+public class Cdpos {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,8 +31,8 @@ public class Cdpo {
     @OneToMany(mappedBy = "cdpo")  // One Cdpo can have multiple sectors
     private List<Sector> sectors;
 
-    public Cdpo() {}
-    public Cdpo(String cdpoName) { this.cdpoName = cdpoName; }
+    public Cdpos() {}
+    public Cdpos(String cdpoName) { this.cdpoName = cdpoName; }
 
     public Long getId() {
         return id;

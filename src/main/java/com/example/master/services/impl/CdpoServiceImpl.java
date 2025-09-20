@@ -3,11 +3,10 @@ package com.example.master.services.impl;
 import com.example.master.Dto.CdpoDTO;
 import com.example.master.Dto.SectorDTO;
 import com.example.master.Dto.AnganwadiCenterDTO;
-import com.example.master.model.Cdpo;
+import com.example.master.model.Cdpos;
 import com.example.master.model.Sector;
 import com.example.master.model.AnganwadiCenter;
 import com.example.master.repository.CdpoRepository;
-import com.example.master.repository.SectorRepository;
 import com.example.master.services.CdpoService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -40,20 +39,20 @@ public class CdpoServiceImpl implements CdpoService {
 
     @Override
     public CdpoDTO createCdpo(CdpoDTO cdpoDTO) {
-        Cdpo cdpo = new Cdpo();
+        Cdpos cdpo = new Cdpos();
         cdpo.setCdpoName(cdpoDTO.getCdpoName());
         // For simplicity, sectors creation can be added if needed
-        Cdpo saved = cdpoRepository.save(cdpo);
+        Cdpos saved = cdpoRepository.save(cdpo);
         return mapToDto(saved);
     }
 
     @Override
     public CdpoDTO updateCdpo(Long id, CdpoDTO cdpoDTO) {
-        Cdpo cdpo = cdpoRepository.findById(id)
+        Cdpos cdpo = cdpoRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Cdpo not found with id " + id));
         cdpo.setCdpoName(cdpoDTO.getCdpoName());
         // Update sectors if required
-        Cdpo updated = cdpoRepository.save(cdpo);
+        Cdpos updated = cdpoRepository.save(cdpo);
         return mapToDto(updated);
     }
 
@@ -63,7 +62,7 @@ public class CdpoServiceImpl implements CdpoService {
     }
 
     // Helper: map Cdpo entity to DTO
-    private CdpoDTO mapToDto(Cdpo cdpo) {
+    private CdpoDTO mapToDto(Cdpos cdpo) {
         CdpoDTO dto = new CdpoDTO();
         dto.setId(cdpo.getId());
         dto.setCdpoName(cdpo.getCdpoName());

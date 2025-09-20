@@ -102,6 +102,7 @@ public class DemandServiceImpl implements DemandService {
         // 🔹 Map Supplier
         if (dto.getSupplierId() != null) {
             demand.setSupplier(dto.getSupplierId());
+            demand.setSupplierName(dto.getSupplierName());
         }
 
         // 🔹 Map District

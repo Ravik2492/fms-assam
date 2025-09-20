@@ -18,6 +18,8 @@ public class DemandDTO {
     private Long fciId;
     private String fciDocs;
     private String supplierId;
+
+    private String supplierName;
     private String supplierDocs;
     private Long districtId;
 
@@ -43,6 +45,14 @@ public class DemandDTO {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getSupplierName() {
+        return supplierName;
+    }
+
+    public void setSupplierName(String supplierName) {
+        this.supplierName = supplierName;
     }
 
     public String getStatus() {

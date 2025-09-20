@@ -12,6 +12,7 @@ public class UserMetadata {
     private String districtId;
     private String sectorId;
     private String projectId;
+    private String fciId;
     private String awc;
 
     public UserMetadata() {}
@@ -22,6 +23,14 @@ public class UserMetadata {
         this.sectorId = sectorId;
         this.projectId = projectId;
         this.awc = awc;
+    }
+
+    public String getFciId() {
+        return fciId;
+    }
+
+    public void setFciId(String fciId) {
+        this.fciId = fciId;
     }
 
     // Getters and setters

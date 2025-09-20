@@ -8,6 +8,8 @@ import com.example.master.repository.RolePermissionRepository;
 import com.example.master.repository.UserMetadataRepository;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
@@ -37,6 +39,7 @@ import lombok.Data;
 @RequiredArgsConstructor
 public class KeycloakAdminService {
 
+    private static final Logger log = LoggerFactory.getLogger(KeycloakAdminService.class);
 
     @Autowired
     private WebClient client;
@@ -389,7 +392,10 @@ public class KeycloakAdminService {
                         .contentType(MediaType.APPLICATION_JSON)
                         .bodyValue(payload)
                         .retrieve()
-                        .bodyToMono(Void.class)
+                        .toBodilessEntity()
+                        .doOnSuccess(response -> log.info("User {} updated successfully", userId))
+                        .doOnError(error -> log.error("Failed to update user {}: {}", userId, error.getMessage()))
+                        .then()
         );
     }
 

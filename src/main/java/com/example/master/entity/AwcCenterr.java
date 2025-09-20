@@ -22,7 +22,7 @@ public class AwcCenterr {
 
     @ManyToOne
     @JoinColumn(name = "sector_id", nullable = false)
-    private Sector sector;
+    private Sectorr sector;
 
     @Column(name = "center_id", nullable = false, unique = true)
     private String centerId;

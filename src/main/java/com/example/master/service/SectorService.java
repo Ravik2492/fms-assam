@@ -2,7 +2,7 @@ package com.example.master.service;
 
 import com.example.master.entity.District;
 import com.example.master.entity.Project;
-import com.example.master.entity.Sector;
+import com.example.master.entity.Sectorr;
 import com.example.master.repository.DistrictRepository;
 import com.example.master.repository.ProjectRepository;
 import com.example.master.repository.SectorRepository;
@@ -23,7 +23,7 @@ public class SectorService {
         this.projectRepo = projectRepo;
     }
 
-    public Sector addSector(Sector sector) {
+    public Sectorr addSector(Sectorr sector) {
         District district = districtRepo.findById(sector.getDistrict().getId())
                 .orElseThrow(() -> new IllegalArgumentException("District not found"));
         Project project = projectRepo.findById(sector.getProject().getId())
@@ -33,8 +33,8 @@ public class SectorService {
         return sectorRepo.save(sector);
     }
 
-    public Sector updateSector(Long id, Sector updated) {
-        Sector existing = sectorRepo.findById(id)
+    public Sectorr updateSector(Long id, Sectorr updated) {
+        Sectorr existing = sectorRepo.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Sector not found"));
 
         District district = districtRepo.findById(updated.getDistrict().getId())
@@ -54,15 +54,15 @@ public class SectorService {
         sectorRepo.deleteById(id);
     }
 
-    public List<Sector> listSectors() {
+    public List<Sectorr> listSectors() {
         return sectorRepo.findAll();
     }
 
-    public List<Sector> findByDistrictIdIn(List<Long> districtIds) {
+    public List<Sectorr> findByDistrictIdIn(List<Long> districtIds) {
         return sectorRepo.findByDistrictIdIn(districtIds);
     }
 
-    public List<Sector> findByProjectIdIn(List<Long> projectIds) {
+    public List<Sectorr> findByProjectIdIn(List<Long> projectIds) {
         return sectorRepo.findByProjectIdIn(projectIds);
     }
 }

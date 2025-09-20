@@ -53,7 +53,7 @@ public class SupplierMappingServiceImpl implements SupplierMappingService {
                 .orElseThrow(() -> new NotFoundException("District not found"));
 
         List<Cdpo> cdpos = cdpoRepository.findAllById(dto.getCdpoIds());
-        List<Sector> sectors = sectorRepository.findAllById(dto.getSectorIds());
+        List<Sectorr> sectors = sectorRepository.findAllById(dto.getSectorIds());
 
         SupplierMapping mapping = new SupplierMapping();
         mapping.setDemand(demand);

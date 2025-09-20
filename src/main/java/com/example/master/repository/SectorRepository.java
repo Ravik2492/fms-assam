@@ -1,15 +1,15 @@
 package com.example.master.repository;
 
-import com.example.master.entity.Sector;
+import com.example.master.entity.Sectorr;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-public interface SectorRepository extends JpaRepository<Sector, Long> {
+public interface SectorRepository extends JpaRepository<Sectorr, Long> {
 
-    List<Sector> findByDistrictIdIn(List<Long> districtIds);
+    List<Sectorr> findByDistrictIdIn(List<Long> districtIds);
 
-    List<Sector> findByProjectIdIn(List<Long> projectIds);
+    List<Sectorr> findByProjectIdIn(List<Long> projectIds);
 
     Long countByDistrictId(Long districtId);
 

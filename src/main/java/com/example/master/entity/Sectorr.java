@@ -3,8 +3,8 @@ package com.example.master.entity;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "sectors")
-public class Sector {
+@Table(name = "sectorss")
+public class Sectorr {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

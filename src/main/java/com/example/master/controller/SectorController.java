@@ -1,6 +1,6 @@
 package com.example.master.controller;
 
-import com.example.master.entity.Sector;
+import com.example.master.entity.Sectorr;
 import com.example.master.service.SectorService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -22,14 +22,14 @@ public class SectorController {
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     @Operation(summary = "Create New sector")
-    public Sector addSector(@RequestBody Sector sector) {
+    public Sectorr addSector(@RequestBody Sectorr sector) {
         return service.addSector(sector);
     }
 
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{id}")
     @Operation(summary = "Update sector")
-    public Sector updateSector(@PathVariable Long id, @RequestBody Sector sector) {
+    public Sectorr updateSector(@PathVariable Long id, @RequestBody Sectorr sector) {
         return service.updateSector(id, sector);
     }
 
@@ -43,21 +43,21 @@ public class SectorController {
     @PreAuthorize("hasAnyRole('ADMIN','AWC','NODAL','SUPPLIER')")
     @GetMapping
     @Operation(summary = "List sectors")
-    public List<Sector> listSectors() {
+    public List<Sectorr> listSectors() {
         return service.listSectors();
     }
 
     @PreAuthorize("hasAnyRole('ADMIN','AWC','NODAL','SUPPLIER')")
     @GetMapping("/byDistrictIds")
     @Operation(summary = "List sectors By District Ids")
-    public List<Sector> listSectorsByDistrictIds(@RequestParam List<Long> districtIds) {
+    public List<Sectorr> listSectorsByDistrictIds(@RequestParam List<Long> districtIds) {
         return service.findByDistrictIdIn(districtIds);
     }
 
     @PreAuthorize("hasAnyRole('ADMIN','AWC','NODAL','SUPPLIER')")
     @GetMapping("/byProjectIds")
     @Operation(summary = "List sectors By Project Ids")
-    public List<Sector> listSectorsByProjectIds(@RequestParam List<Long> projectIds) {
+    public List<Sectorr> listSectorsByProjectIds(@RequestParam List<Long> projectIds) {
         return service.findByProjectIdIn(projectIds);
     }
 }

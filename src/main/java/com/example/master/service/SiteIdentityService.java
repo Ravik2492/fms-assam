@@ -1,6 +1,6 @@
 package com.example.master.service;
 
-import com.example.master.entity.SiteIdentity;
+import com.example.master.entity.SiteIdentityy;
 import com.example.master.repository.SiteIdentityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
@@ -21,8 +21,8 @@ public class SiteIdentityService {
         this.repository = repository;
     }
 
-    public SiteIdentity updateSiteIdentity(Long id, SiteIdentity updated, MultipartFile logo, MultipartFile loginLogo) {
-        SiteIdentity existing = repository.findById(id)
+    public SiteIdentityy updateSiteIdentity(Long id, SiteIdentityy updated, MultipartFile logo, MultipartFile loginLogo) {
+        SiteIdentityy existing = repository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Site identity not found"));
 
         existing.setSiteAddress(updated.getSiteAddress());
@@ -51,12 +51,12 @@ public class SiteIdentityService {
         //return "/uploads/" + file.getOriginalFilename(); // Example placeholder
     }
 
-    public Optional<SiteIdentity> getSiteIdentity(Long id) {
+    public Optional<SiteIdentityy> getSiteIdentity(Long id) {
         return repository.findById(id);
     }
 
     public Resource loadFileById(Long id, String logoType) {
-        SiteIdentity identity = repository.findById(id)
+        SiteIdentityy identity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("SiteIdentity not found"));
 
         String filePath = identity.getLogoPath();

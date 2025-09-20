@@ -1,7 +1,7 @@
 package com.example.master.controller;
 
 
-import com.example.master.entity.SiteIdentity;
+import com.example.master.entity.SiteIdentityy;
 import com.example.master.service.SiteIdentityService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -30,9 +30,9 @@ public class SiteIdentityController {
     @PreAuthorize("hasAnyRole('ADMIN') or hasAuthority('ROLE_MANAGE_USERS')")
     @PutMapping("/{id}")
     @Operation(summary = "Update site attributes")
-    public SiteIdentity updateSiteIdentity(
+    public SiteIdentityy updateSiteIdentity(
             @PathVariable Long id,
-            @RequestPart("data") SiteIdentity updated,
+            @RequestPart("data") SiteIdentityy updated,
             @RequestPart(value = "logo", required = false) MultipartFile logo,
             @RequestPart(value = "loginLogo", required = false) MultipartFile loginLogo
     ) {
@@ -42,7 +42,7 @@ public class SiteIdentityController {
     @PreAuthorize("hasAnyRole('ADMIN','AWC','NODAL','SUPPLIER') or hasAuthority('ROLE_MANAGE_USERS')")
     @GetMapping("/{id}")
     @Operation(summary = "Fetch site attributes")
-    public SiteIdentity getSiteIdentity(@PathVariable Long id) {
+    public SiteIdentityy getSiteIdentity(@PathVariable Long id) {
         return service.getSiteIdentity(id).orElseThrow(() -> new RuntimeException("Not found"));
     }
 

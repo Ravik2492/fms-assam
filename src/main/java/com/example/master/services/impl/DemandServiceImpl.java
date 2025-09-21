@@ -333,7 +333,7 @@ public class DemandServiceImpl implements DemandService {
                                 dto.setCdpoId(detail.getCdpoId().getId()); // or name, etc.
                                 dto.setCdpoName(detail.getCdpoName());
                                 //dto.setRemarks(detail.getRemarks());
-                                dto.setNumberOfPackets(dto.numberOfPackets);
+                                dto.setNumberOfPackets(detail.getNumberOfPackets());
                                 return dto;
                             })
                             .collect(Collectors.toList());

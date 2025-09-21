@@ -1,10 +1,15 @@
 package com.example.master.Dto;
 
+import com.example.master.model.DispatchDetail;
+import jakarta.persistence.Transient;
+import lombok.Data;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
 
+@Data
 public class DemandResponseDTO {
     private Long id;
     private String description;
@@ -26,6 +31,7 @@ public class DemandResponseDTO {
     private LocalDateTime awcAcceptedAt;
     private LocalDateTime awcDistributedAt;
     private String rejectionReason;
+    private List<DispatchDetail> dispatchDetails;
 
     private DemandCategoryDTO demandCategory;
     private BeneficiaryDTO beneficiary;

@@ -317,8 +317,18 @@ public class DemandServiceImpl implements DemandService {
                 .distinct() // optional: removes duplicates
                 .collect(Collectors.toList());
 
-        return demandRepository.findByIdIn(demandIds)
-                .stream().map(this::convertToDTO).toList();
+        List<DemandResponseDTO> enrichedDemands = demandRepository.findByIdIn(demandIds)
+                .stream()
+                .map(demand -> {
+                    DemandResponseDTO dto = convertToDTO(demand);
+
+                    List<DispatchDetail> dispatchDetailss = dispatchDetailRepository.findByDemandId(demand.getId());
+                    dto.setDispatchDetails(dispatchDetailss);
+
+                    return dto;
+                })
+                .collect(Collectors.toList());
+        return enrichedDemands;
     }
 
     @Override

@@ -54,8 +54,8 @@ public class SecurityConfig {
 
         //config.setAllowedOrigins(List.of("*"));
         config.setAllowedOrigins(List.of("http://localhost:9909", "http://localhost:3000",
-                "http://localhost:8080", "https://43.204.192.57", "https://13.233.95.99",
-                "http://13.233.95.99", "http://13.233.95.99:3000",
+                "http://localhost:8080", "https://43.204.192.57", "https://3.108.164.252",
+                "http://3.108.164.252", "http://3.108.164.252:3000",
                 "http://millet-poshan.eighteenpixels.in",
                 "https://aanna-prabah-api.eighteenpixels.in",
                 "https://snp-assam.eighteenpixels.com",

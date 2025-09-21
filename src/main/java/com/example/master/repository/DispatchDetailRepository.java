@@ -10,6 +10,6 @@ import java.util.Optional;
 public interface DispatchDetailRepository extends JpaRepository<DispatchDetail, Long> {
     List<DispatchDetail> findByDemandId(Long demandId);
 
-    List<DispatchDetail> findByCdpoId(Long cdpoId);
+    List<DispatchDetail> findByCdpoId(Project cdpoId);
     Optional<DispatchDetail> findTopByOrderByIdDesc();
 }

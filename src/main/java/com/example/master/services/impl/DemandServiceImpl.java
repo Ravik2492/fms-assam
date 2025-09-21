@@ -310,8 +310,8 @@ public class DemandServiceImpl implements DemandService {
     public List<DemandResponseDTO> getManufacturedDemandsForCDPO() {
         String userid = TokenHelper.getUsername();
         UserMetadata metadata = userMetadataRepository.getById(userid);
-        //Project project = projectRepository.getById(Long.valueOf(metadata.getProjectId()));
-        List<DispatchDetail> dispatchDetails = dispatchDetailRepository.findByCdpoId(Long.valueOf(metadata.getProjectId()));
+        Project project = projectRepository.getById(Long.valueOf(metadata.getProjectId()));
+        List<DispatchDetail> dispatchDetails = dispatchDetailRepository.findByCdpoId(project);
         List<Long> demandIds = dispatchDetails.stream()
                 .map(DispatchDetail::getDemandId)
                 .distinct() // optional: removes duplicates

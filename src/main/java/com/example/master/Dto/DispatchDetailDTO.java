@@ -6,6 +6,8 @@ import lombok.Data;
 @Data
 public class DispatchDetailDTO {
 
+    public Long dispatchId;
+    private String lotNumber; //
     public Long demandId;
     public String batchNumber; // link by number, not FK
     public Long cdpoId;

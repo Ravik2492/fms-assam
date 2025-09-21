@@ -31,7 +31,7 @@ public class DemandResponseDTO {
     private LocalDateTime awcAcceptedAt;
     private LocalDateTime awcDistributedAt;
     private String rejectionReason;
-    private List<DispatchDetail> dispatchDetails;
+    private List<DispatchDetailDTO> dispatchDetails;
 
     private DemandCategoryDTO demandCategory;
     private BeneficiaryDTO beneficiary;

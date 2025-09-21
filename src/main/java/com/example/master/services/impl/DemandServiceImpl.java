@@ -320,12 +320,26 @@ public class DemandServiceImpl implements DemandService {
         List<DemandResponseDTO> enrichedDemands = demandRepository.findByIdIn(demandIds)
                 .stream()
                 .map(demand -> {
-                    DemandResponseDTO dto = convertToDTO(demand);
+                    DemandResponseDTO dtoo = convertToDTO(demand);
 
                     List<DispatchDetail> dispatchDetailss = dispatchDetailRepository.findByDemandId(demand.getId());
-                    dto.setDispatchDetails(dispatchDetailss);
+                    List<DispatchDetailDTO> dispatchDTOs = dispatchDetails.stream()
+                            .map(detail -> {
+                                DispatchDetailDTO dto = new DispatchDetailDTO();
+                                dto.setDispatchId(detail.getId());
+                                dto.setDemandId(detail.getDemandId());
+                                dto.setBatchNumber(detail.getBatchNumber());
+                                dto.setLotNumber(detail.getLotNumber());
+                                dto.setCdpoId(detail.getCdpoId().getId()); // or name, etc.
+                                dto.setCdpoName(detail.getCdpoName());
+                                //dto.setRemarks(detail.getRemarks());
+                                dto.setNumberOfPackets(dto.numberOfPackets);
+                                return dto;
+                            })
+                            .collect(Collectors.toList());
+                    dtoo.setDispatchDetails(dispatchDTOs);
 
-                    return dto;
+                    return dtoo;
                 })
                 .collect(Collectors.toList());
         return enrichedDemands;

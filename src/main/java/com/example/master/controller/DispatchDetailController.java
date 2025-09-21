@@ -57,7 +57,7 @@ public class DispatchDetailController {
         return ResponseEntity.ok(detail);
     }
 
-    @PostMapping
+    @PostMapping("/bulk")
     public ResponseEntity<List<DispatchDetail>> createBulk(@RequestBody List<DispatchDetailDTO> dtos) {
         List<DispatchDetail> dispatches = dtos.stream().map(dto -> {
             DispatchDetail d = new DispatchDetail();

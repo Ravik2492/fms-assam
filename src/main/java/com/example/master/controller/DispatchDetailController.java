@@ -8,7 +8,7 @@ import com.example.master.services.DispatchDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import java.net.URI;
+
 import java.util.List;
 
 @RestController
@@ -28,7 +28,7 @@ public class DispatchDetailController {
         DispatchDetail d = new DispatchDetail();
         d.setDemandId(dto.demandId);
         d.setBatchNumber(dto.batchNumber);
-        d.setCdpoName(dto.cdpoName);
+        d.setCdpoId(dto.cdpoId);
         d.setNumberOfPackets(dto.numberOfPackets);
         d.setRemarks(dto.remarks);
 
@@ -44,7 +44,7 @@ public class DispatchDetailController {
             DispatchDetail d = new DispatchDetail();
             d.setDemandId(dto.demandId);
             d.setBatchNumber(dto.batchNumber);
-            d.setCdpoName(dto.cdpoName);
+            d.setCdpoId(dto.cdpoId);
             d.setNumberOfPackets(dto.numberOfPackets);
             d.setRemarks(dto.remarks);
             return d;

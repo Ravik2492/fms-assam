@@ -2,6 +2,7 @@
 // DispatchDetail.java
 package com.example.master.model;
 
+import com.example.master.entity.Project;
 import jakarta.persistence.*;
 
 @Entity
@@ -17,7 +18,12 @@ public class DispatchDetail {
     @Column(name = "lot_number", unique = true)
     private String lotNumber; // L-1
 
-    private String cdpoName;
+
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "cdpo_id", nullable = false)
+    private Project cdpoId;
+
     private Integer numberOfPackets;
     private String remarks;
 
@@ -31,10 +37,16 @@ public class DispatchDetail {
     public void setDemandId(Long demandId){ this.demandId = demandId; }
     public String getLotNumber(){ return lotNumber; }
     public void setLotNumber(String lotNumber){ this.lotNumber = lotNumber; }
-    public String getCdpoName(){ return cdpoName; }
-    public void setCdpoName(String cdpoName){ this.cdpoName = cdpoName; }
     public Integer getNumberOfPackets(){ return numberOfPackets; }
     public void setNumberOfPackets(Integer numberOfPackets){ this.numberOfPackets = numberOfPackets; }
+
+    public Project getCdpoId() {
+        return cdpoId;
+    }
+
+    public void setCdpoId(Project cdpoId) {
+        this.cdpoId = cdpoId;
+    }
     public String getRemarks(){ return remarks; }
     public void setRemarks(String remarks){ this.remarks = remarks; }
     public String getBatchNumber(){ return batchNumber; }

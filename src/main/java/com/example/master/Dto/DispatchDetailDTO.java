@@ -1,10 +1,12 @@
 package com.example.master.Dto;
 
+import com.example.master.entity.Project;
+
 public class DispatchDetailDTO {
 
     public Long demandId;
     public String batchNumber; // link by number, not FK
-    public String cdpoName;
+    public Project cdpoId;
     public Integer numberOfPackets;
     public String remarks;
 
@@ -24,12 +26,12 @@ public class DispatchDetailDTO {
         this.batchNumber = batchNumber;
     }
 
-    public String getCdpoName() {
-        return cdpoName;
+    public Project getCdpoId() {
+        return cdpoId;
     }
 
-    public void setCdpoName(String cdpoName) {
-        this.cdpoName = cdpoName;
+    public void setCdpoId(Project cdpoId) {
+        this.cdpoId = cdpoId;
     }
 
     public Integer getNumberOfPackets() {

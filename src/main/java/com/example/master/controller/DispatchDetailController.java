@@ -7,6 +7,7 @@ import com.example.master.model.CDPOSupplierDispatch;
 import com.example.master.model.DispatchDetail;
 import com.example.master.repository.CDPOSupplierDispatchRepository;
 import com.example.master.repository.DispatchDetailRepository;
+import com.example.master.repository.ProjectRepository;
 import com.example.master.services.DemandService;
 import com.example.master.services.DispatchDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,9 @@ public class DispatchDetailController {
 
     @Autowired
     private CDPOSupplierDispatchRepository repository;
+
+    @Autowired
+    private ProjectRepository projectRepository;
 
     public DispatchDetailController(DispatchDetailService service){
         this.service = service;
@@ -63,7 +67,9 @@ public class DispatchDetailController {
             DispatchDetail d = new DispatchDetail();
             d.setDemandId(dto.demandId);
             d.setBatchNumber(dto.batchNumber);
-            d.setCdpoId(dto.cdpoId);
+            d.setCdpoName(dto.cdpoName);
+
+            d.setCdpoId(projectRepository.getById(dto.cdpoId));
             d.setNumberOfPackets(dto.numberOfPackets);
             d.setRemarks(dto.remarks);
             return d;

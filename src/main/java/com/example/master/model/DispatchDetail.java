@@ -27,6 +27,8 @@ public class DispatchDetail {
     @JoinColumn(name = "cdpo_id", nullable = false)
     private Project cdpoId;
 
+    private String cdpoName;
+
     @OneToMany(mappedBy = "dispatchDetail", cascade = CascadeType.ALL)
     @JsonManagedReference
     private List<CDPOSupplierDispatch> cdpoSupplierDispatches;

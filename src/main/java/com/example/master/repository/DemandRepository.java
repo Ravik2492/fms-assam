@@ -16,6 +16,8 @@ public interface DemandRepository extends JpaRepository<Demand, Long> {
     // Find demands by status
     List<Demand> findByStatus(String status);
 
+    List<Demand> findByIdIn(List<Long> demandIds);
+
     // Find demands by status ordered by creation date
     List<Demand> findByStatusOrderByCreatedAtDesc(String status);
 

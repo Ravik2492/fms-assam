@@ -6,6 +6,7 @@ import com.example.master.Dto.DemandProduct;
 import com.example.master.config.KeycloakUserService;
 import com.example.master.config.TokenHelper;
 import com.example.master.dtobj.Role;
+import com.example.master.entity.Project;
 import com.example.master.entity.UserMetadata;
 import com.example.master.event.DemandEventPublisher;
 import com.example.master.exception.NotFoundException;
@@ -39,6 +40,9 @@ public class DemandServiceImpl implements DemandService {
 
     @Autowired
     private UserMetadataRepository userMetadataRepository;
+
+    @Autowired
+    private DispatchDetailRepository dispatchDetailRepository;
 
     @Autowired
     private ProjectRepository projectRepository;
@@ -306,8 +310,14 @@ public class DemandServiceImpl implements DemandService {
     public List<DemandResponseDTO> getManufacturedDemandsForCDPO() {
         String userid = TokenHelper.getUsername();
         UserMetadata metadata = userMetadataRepository.getById(userid);
-        metadata.getProjectId();
-        return demandRepository.findDemandsForCdpo()
+        //Project project = projectRepository.getById(Long.valueOf(metadata.getProjectId()));
+        List<DispatchDetail> dispatchDetails = dispatchDetailRepository.findByCdpoId(Long.valueOf(metadata.getProjectId()));
+        List<Long> demandIds = dispatchDetails.stream()
+                .map(DispatchDetail::getDemandId)
+                .distinct() // optional: removes duplicates
+                .collect(Collectors.toList());
+
+        return demandRepository.findByIdIn(demandIds)
                 .stream().map(this::convertToDTO).toList();
     }
 

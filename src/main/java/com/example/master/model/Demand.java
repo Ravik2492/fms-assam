@@ -86,6 +86,9 @@ public class Demand {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
+    @Transient
+    private List<DispatchDetail> dispatchDetails;
+
     @PrePersist
     protected void onCreate() {
         this.createdAt = LocalDateTime.now();

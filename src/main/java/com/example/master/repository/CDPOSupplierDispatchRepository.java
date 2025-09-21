@@ -13,4 +13,6 @@ public interface CDPOSupplierDispatchRepository extends JpaRepository<CDPOSuppli
     String findLastSublotNo();
 
     List<CDPOSupplierDispatch> findByDemandId(Long demandId);
+
+    List<CDPOSupplierDispatch> findByD(Long demandId);
 }

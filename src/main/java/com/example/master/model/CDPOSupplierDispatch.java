@@ -1,11 +1,14 @@
 package com.example.master.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
+import lombok.Data;
 
 @Entity
 @Table(name = "cdpo_supplier_dispatch")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+@Data
 public class CDPOSupplierDispatch {
 
     @Id
@@ -15,14 +18,10 @@ public class CDPOSupplierDispatch {
     @Column(name = "demand_id", nullable = false)
     private Long demandId;
 
-    @Column(name = "batch_no")
-    private String batchNo;
-
-    @Column(name = "lot_no")
-    private String lotNo;
-
-    @Column(name = "cdpo")
-    private String cdpo;   // CDPO/Project Name
+    @ManyToOne
+    @JoinColumn(name = "dispatch_detail_id", nullable = false)
+    @JsonBackReference
+    private DispatchDetail dispatchDetail;
 
     @Column(name = "sector")
     private String sector;
@@ -42,15 +41,6 @@ public class CDPOSupplierDispatch {
 
     public Long getDemandId() { return demandId; }
     public void setDemandId(Long demandId) { this.demandId = demandId; }
-
-    public String getBatchNo() { return batchNo; }
-    public void setBatchNo(String batchNo) { this.batchNo = batchNo; }
-
-    public String getLotNo() { return lotNo; }
-    public void setLotNo(String lotNo) { this.lotNo = lotNo; }
-
-    public String getCdpo() { return cdpo; }
-    public void setCdpo(String cdpo) { this.cdpo = cdpo; }
 
     public String getSector() { return sector; }
     public void setSector(String sector) { this.sector = sector; }

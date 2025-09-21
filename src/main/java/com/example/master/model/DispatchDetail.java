@@ -3,10 +3,15 @@
 package com.example.master.model;
 
 import com.example.master.entity.Project;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+import lombok.Data;
+
+import java.util.List;
 
 @Entity
 @Table(name = "dispatch_details")
+@Data
 public class DispatchDetail {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,13 +23,21 @@ public class DispatchDetail {
     @Column(name = "lot_number", unique = true)
     private String lotNumber; // L-1
 
-
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "cdpo_id", nullable = false)
     private Project cdpoId;
 
+    @OneToMany(mappedBy = "dispatchDetail", cascade = CascadeType.ALL)
+    @JsonManagedReference
+    private List<CDPOSupplierDispatch> cdpoSupplierDispatches;
+
     private Integer numberOfPackets;
+
+    private Integer acceptedPackets;
+
+    private Integer remainingPackets;
+
+    private String acceptedRemarks;
     private String remarks;
 
     @Column(name = "batch_number")

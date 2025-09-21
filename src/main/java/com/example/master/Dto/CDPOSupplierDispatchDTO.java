@@ -1,12 +1,14 @@
 package com.example.master.Dto;
 
+import com.example.master.model.DispatchDetail;
+import lombok.Data;
+
+@Data
 public class CDPOSupplierDispatchDTO {
 
     private Long id;
     private Long demandId;
-    private String batchNo;
-    private String lotNo;
-    private String cdpo;
+    private Long dispatchDetailId;
     private String sector;
     private Integer dispatchPackets;
     private String remarks;
@@ -18,15 +20,6 @@ public class CDPOSupplierDispatchDTO {
 
     public Long getDemandId() { return demandId; }
     public void setDemandId(Long demandId) { this.demandId = demandId; }
-
-    public String getBatchNo() { return batchNo; }
-    public void setBatchNo(String batchNo) { this.batchNo = batchNo; }
-
-    public String getLotNo() { return lotNo; }
-    public void setLotNo(String lotNo) { this.lotNo = lotNo; }
-
-    public String getCdpo() { return cdpo; }
-    public void setCdpo(String cdpo) { this.cdpo = cdpo; }
 
     public String getSector() { return sector; }
     public void setSector(String sector) { this.sector = sector; }

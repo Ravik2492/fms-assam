@@ -1,14 +1,20 @@
 // DispatchDetailController.java
 package com.example.master.controller;
 
+import com.example.master.Dto.CDPOSupplierDispatchDTO;
 import com.example.master.Dto.DispatchDetailDTO;
+import com.example.master.model.CDPOSupplierDispatch;
 import com.example.master.model.DispatchDetail;
+import com.example.master.repository.CDPOSupplierDispatchRepository;
+import com.example.master.repository.DispatchDetailRepository;
 import com.example.master.services.DemandService;
 import com.example.master.services.DispatchDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -16,29 +22,42 @@ import java.util.List;
 public class DispatchDetailController {
 
     private final DispatchDetailService service;
+
+    @Autowired
+    private DispatchDetailRepository dispatchDetailRepository;
     @Autowired
     private DemandService demandService;
+
+    @Autowired
+    private CDPOSupplierDispatchRepository repository;
 
     public DispatchDetailController(DispatchDetailService service){
         this.service = service;
     }
 
-    @PostMapping
-    public ResponseEntity<DispatchDetail> create(@RequestBody DispatchDetailDTO dto){
-        DispatchDetail d = new DispatchDetail();
-        d.setDemandId(dto.demandId);
-        d.setBatchNumber(dto.batchNumber);
-        d.setCdpoId(dto.cdpoId);
-        d.setNumberOfPackets(dto.numberOfPackets);
-        d.setRemarks(dto.remarks);
 
-        DispatchDetail saved = service.createDispatch(d);
-        demandService.updateStatus(dto.demandId, "CDPO_DISPATCHED");
-        // ✅ return 201 CREATED with entity in body (no URI)
-        return ResponseEntity.status(201).body(saved);
+    @GetMapping("/by-demand/{demandId}")
+    public ResponseEntity<List<DispatchDetail>> listByDemand(@PathVariable Long demandId){
+        return ResponseEntity.ok(service.findByDemandId(demandId));
     }
 
-    @PostMapping("/bulk")
+    @PostMapping("/accept/{id}")
+    public ResponseEntity<DispatchDetail> accept(@PathVariable("id") Long id,
+                                                 @RequestParam("acceptedPackets") Integer acceptedPackets, @RequestParam("remarks") String remarks){
+
+
+        DispatchDetail detail = dispatchDetailRepository.getById(id);
+        detail.setAcceptedPackets(acceptedPackets);
+        detail.setRemainingPackets(acceptedPackets);
+        detail.setAcceptedRemarks(remarks);
+
+        DispatchDetail saved = service.createDispatch(detail);
+        //demandService.updateStatus(dto.demandId, "CDPO_DISPATCHED");
+        // ✅ return 201 CREATED with entity in body (no URI)
+        return ResponseEntity.ok(detail);
+    }
+
+    @PostMapping
     public ResponseEntity<List<DispatchDetail>> createBulk(@RequestBody List<DispatchDetailDTO> dtos) {
         List<DispatchDetail> dispatches = dtos.stream().map(dto -> {
             DispatchDetail d = new DispatchDetail();
@@ -56,9 +75,55 @@ public class DispatchDetailController {
     }
 
 
-    @GetMapping("/by-demand/{demandId}")
-    public ResponseEntity<List<DispatchDetail>> listByDemand(@PathVariable Long demandId){
-        return ResponseEntity.ok(service.findByDemandId(demandId));
+    @PostMapping("/dispatch-to-sector")
+    public ResponseEntity<List<CDPOSupplierDispatch>> dispatch(@RequestBody List<CDPOSupplierDispatchDTO> dtos) {
+
+        List<CDPOSupplierDispatch> dispatches = new ArrayList<>();
+
+        for (CDPOSupplierDispatchDTO dto : dtos) {
+            CDPOSupplierDispatch entity = new CDPOSupplierDispatch();
+
+            DispatchDetail detail = dispatchDetailRepository.getById(dto.getDispatchDetailId());
+            entity.setDispatchDetail(detail);
+            entity.setDemandId(dto.getDemandId());
+            entity.setSector(dto.getSector());
+            entity.setDispatchPackets(dto.getDispatchPackets());
+            entity.setRemarks(dto.getRemarks());
+
+            // ✅ Auto-generate sublot number
+            entity.setSublotNo(generateNextSublotNo());
+
+            // ✅ Update remaining packets
+            detail.setRemainingPackets(detail.getRemainingPackets() - dto.getDispatchPackets());
+            dispatchDetailRepository.save(detail);
+
+            // ✅ Save dispatch entity
+            CDPOSupplierDispatch savedEntity = repository.save(entity);
+
+            // ✅ Update DTO with generated values
+            dto.setId(savedEntity.getId());
+            dto.setSublotNo(savedEntity.getSublotNo());
+
+            dispatches.add(savedEntity);
+        }
+
+        // ✅ Update demand status (assuming all DTOs share the same demandId)
+        demandService.updateStatus(dtos.get(0).getDemandId(), "CDPO_DISPATCHED");
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(dispatches);
+    }
+
+    private String generateNextSublotNo() {
+        String lastSublotNo = repository.findLastSublotNo();
+        if (lastSublotNo == null) {
+            return "SUBLOT-1";
+        }
+        try {
+            int lastNumber = Integer.parseInt(lastSublotNo.replace("SUBLOT-", ""));
+            return "SUBLOT-" + (lastNumber + 1);
+        } catch (NumberFormatException e) {
+            return "SUBLOT-1"; // fallback if malformed
+        }
     }
 
 }

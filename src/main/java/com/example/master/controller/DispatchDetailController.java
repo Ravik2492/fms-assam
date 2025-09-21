@@ -3,11 +3,15 @@ package com.example.master.controller;
 
 import com.example.master.Dto.CDPOSupplierDispatchDTO;
 import com.example.master.Dto.DispatchDetailDTO;
+import com.example.master.config.TokenHelper;
+import com.example.master.entity.Project;
+import com.example.master.entity.UserMetadata;
 import com.example.master.model.CDPOSupplierDispatch;
 import com.example.master.model.DispatchDetail;
 import com.example.master.repository.CDPOSupplierDispatchRepository;
 import com.example.master.repository.DispatchDetailRepository;
 import com.example.master.repository.ProjectRepository;
+import com.example.master.repository.UserMetadataRepository;
 import com.example.master.services.DemandService;
 import com.example.master.services.DispatchDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +39,9 @@ public class DispatchDetailController {
     @Autowired
     private ProjectRepository projectRepository;
 
+    @Autowired
+    private UserMetadataRepository userMetadataRepository;
+
     public DispatchDetailController(DispatchDetailService service){
         this.service = service;
     }
@@ -42,6 +49,11 @@ public class DispatchDetailController {
 
     @GetMapping("/by-demand/{demandId}")
     public ResponseEntity<List<DispatchDetail>> listByDemand(@PathVariable Long demandId){
+
+        String userid = TokenHelper.getUsername();
+        UserMetadata metadata = userMetadataRepository.getById(userid);
+        List<DispatchDetail> dispatchDetails = service.findByDemandId(demandId).stream()
+                .filter(dispatchDetail -> dispatchDetail.getCdpoId().getId().equals(Long.valueOf(metadata.getProjectId()))).toList();
         return ResponseEntity.ok(service.findByDemandId(demandId));
     }
 

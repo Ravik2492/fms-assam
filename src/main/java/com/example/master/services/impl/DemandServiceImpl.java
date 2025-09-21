@@ -339,7 +339,7 @@ public class DemandServiceImpl implements DemandService {
                             })
                             .collect(Collectors.toList());
                     dtoo.setDispatchDetails(dispatchDTOs);
-                    dispatchDTOs = new ArrayList<>();
+                    //dispatchDTOs = new ArrayList<>();
 
                     return dtoo;
                 })

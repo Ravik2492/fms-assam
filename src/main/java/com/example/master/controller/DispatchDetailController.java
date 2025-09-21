@@ -75,7 +75,7 @@ public class DispatchDetailController {
             return d;
         }).toList();
 
-        demandService.updateStatus(dtos.get(0).demandId, "CDPO_DISPATCHED");
+        //demandService.updateStatus(dtos.get(0).demandId, "CDPO_DISPATCHED");
         List<DispatchDetail> saved = service.createDispatches(dispatches);
         return ResponseEntity.status(201).body(saved);
     }

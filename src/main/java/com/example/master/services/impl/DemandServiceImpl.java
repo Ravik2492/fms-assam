@@ -324,6 +324,7 @@ public class DemandServiceImpl implements DemandService {
 
                     List<DispatchDetail> dispatchDetailss = dispatchDetailRepository.findByDemandId(demand.getId());
                     List<DispatchDetailDTO> dispatchDTOs = dispatchDetails.stream()
+                            .filter(dispatchDetail -> dispatchDetail.getCdpoId().equals(Long.valueOf(metadata.getProjectId())))
                             .map(detail -> {
                                 DispatchDetailDTO dto = new DispatchDetailDTO();
                                 dto.setDispatchId(detail.getId());

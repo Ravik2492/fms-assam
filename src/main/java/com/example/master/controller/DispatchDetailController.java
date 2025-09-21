@@ -54,7 +54,7 @@ public class DispatchDetailController {
         UserMetadata metadata = userMetadataRepository.getById(userid);
         List<DispatchDetail> dispatchDetails = service.findByDemandId(demandId).stream()
                 .filter(dispatchDetail -> dispatchDetail.getCdpoId().getId().equals(Long.valueOf(metadata.getProjectId()))).toList();
-        return ResponseEntity.ok(service.findByDemandId(demandId));
+        return ResponseEntity.ok(dispatchDetails);
     }
 
     @PostMapping("/accept/{id}")

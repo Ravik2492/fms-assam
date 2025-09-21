@@ -167,16 +167,16 @@ public class DemandController {
         return ResponseEntity.ok(demand);
     }
 
-
     @PreAuthorize("hasAnyRole('ADMIN','DWCD','FCI','SUPPLIER','CDPO','AWC')")
     @PutMapping("/{demandId}/rejection-reason")
     public ResponseEntity<Void> updateRejectionReason(
             @PathVariable Long demandId,
-            @RequestBody DemandDTO demandDTO) {
-        // Call the service to update the rejection reason
-        demandService.updateRejectionReason(demandId, demandDTO.getRejectionReason());
+            @RequestBody RejectionReasonDTO rejectionReasonDTO) {
+
+        demandService.updateRejectionReason(demandId, rejectionReasonDTO.getRejectionReason());
         return ResponseEntity.noContent().build();
     }
+
 
     // Updte quantity
 //    @PreAuthorize("hasRole('FCI')")

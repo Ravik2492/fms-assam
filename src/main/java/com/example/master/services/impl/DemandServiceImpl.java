@@ -185,7 +185,6 @@ public class DemandServiceImpl implements DemandService {
         demandRepository.save(demand);
     }
 
-
     @Override
     public List<DemandResponseDTO> getAllDemands() {
         return demandRepository.findAll().stream()

@@ -23,8 +23,9 @@ public class DispatchDetail {
     @Column(name = "lot_number", unique = true)
     private String lotNumber; // L-1
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "cdpo_id", nullable = false)
+    @JsonManagedReference
     private Project cdpoId;
 
     private String cdpoName;

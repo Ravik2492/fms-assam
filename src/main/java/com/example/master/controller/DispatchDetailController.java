@@ -3,7 +3,9 @@ package com.example.master.controller;
 
 import com.example.master.Dto.DispatchDetailDTO;
 import com.example.master.model.DispatchDetail;
+import com.example.master.services.DemandService;
 import com.example.master.services.DispatchDetailService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.net.URI;
@@ -14,6 +16,8 @@ import java.util.List;
 public class DispatchDetailController {
 
     private final DispatchDetailService service;
+    @Autowired
+    private DemandService demandService;
 
     public DispatchDetailController(DispatchDetailService service){
         this.service = service;
@@ -29,6 +33,7 @@ public class DispatchDetailController {
         d.setRemarks(dto.remarks);
 
         DispatchDetail saved = service.createDispatch(d);
+        demandService.updateStatus(dto.demandId, "CDPO_DISPATCHED");
         // ✅ return 201 CREATED with entity in body (no URI)
         return ResponseEntity.status(201).body(saved);
     }
@@ -45,6 +50,7 @@ public class DispatchDetailController {
             return d;
         }).toList();
 
+        demandService.updateStatus(dtos.get(0).demandId, "CDPO_DISPATCHED");
         List<DispatchDetail> saved = service.createDispatches(dispatches);
         return ResponseEntity.status(201).body(saved);
     }

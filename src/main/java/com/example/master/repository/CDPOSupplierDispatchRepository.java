@@ -14,5 +14,4 @@ public interface CDPOSupplierDispatchRepository extends JpaRepository<CDPOSuppli
 
     List<CDPOSupplierDispatch> findByDemandId(Long demandId);
 
-    List<CDPOSupplierDispatch> findByD(Long demandId);
 }

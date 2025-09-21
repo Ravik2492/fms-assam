@@ -189,6 +189,7 @@ public class DemandServiceImpl implements DemandService {
     public List<DemandResponseDTO> getAllDemands() {
         return demandRepository.findAll().stream()
                 .map(this::convertToDTO)
+                .sorted(Comparator.comparing(DemandResponseDTO::getId).reversed())
                 .collect(Collectors.toList());
     }
 

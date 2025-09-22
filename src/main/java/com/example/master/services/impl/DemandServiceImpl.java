@@ -359,7 +359,7 @@ public class DemandServiceImpl implements DemandService {
         String userid = TokenHelper.getUsername();
         UserMetadata metadata = userMetadataRepository.getById(userid);
         Sectorr sectorr = sectorRepository.getById(Long.valueOf(metadata.getSectorId()));
-        List<CDPOSupplierDispatch> dispatchDetails = cdpoSupplierDispatchRepository.findBySectorrId(sectorr);
+        List<CDPOSupplierDispatch> dispatchDetails = cdpoSupplierDispatchRepository.findBySectorr(sectorr);
         List<Long> demandIds = dispatchDetails.stream()
                 .map(CDPOSupplierDispatch::getDemandId)
                 .distinct() // optional: removes duplicates

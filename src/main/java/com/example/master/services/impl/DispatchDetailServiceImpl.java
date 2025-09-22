@@ -29,10 +29,11 @@ public class DispatchDetailServiceImpl implements DispatchDetailService {
 
     @Override
     public List<DispatchDetail> createDispatches(List<DispatchDetail> dispatches) {
-        Long next = 0L;
+        Long next = 1L;
 
         for (DispatchDetail d : dispatches) {
-            d.setLotNumber("L-" + next++);
+            d.setLotNumber("L-" + next);
+            next++;
         }
 
         return repo.saveAll(dispatches);

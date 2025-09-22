@@ -26,7 +26,7 @@ public class CDPOSupplierDispatch {
     @JsonBackReference
     private DispatchDetail dispatchDetail;
 
-    @OneToMany(mappedBy = "awcDispatch", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "cdpoSupplierDispatch", cascade = CascadeType.ALL)
     @JsonManagedReference
     private List<AWCDispatch> awcDispatches;
 

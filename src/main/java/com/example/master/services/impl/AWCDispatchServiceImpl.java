@@ -114,6 +114,7 @@ public class AWCDispatchServiceImpl implements AWCDispatchService {
         dto.setDistributedPackets(entity.getDistributedPackets());
         dto.setCreatedAt(entity.getCreatedAt());
 
+
         if (entity.getDemand() != null) {
             dto.setDemandId(entity.getDemand().getId());
 //            dto.setDemandName(entity.getDemand().getName()); // optional

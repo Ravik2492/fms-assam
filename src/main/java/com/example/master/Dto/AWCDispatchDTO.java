@@ -16,7 +16,7 @@ public class AWCDispatchDTO {
     private Long cdpoSupplierDispatchId;
 
     private Long demandId;
-    private String demandName; // From Demand entity
+    //private String demandName; // From Demand entity
 
     private Long anganwadiId;
     private String anganwadiName;
@@ -33,30 +33,6 @@ public class AWCDispatchDTO {
         this.id = id;
     }
 
-    public String getSublotNo() {
-        return sublotNo;
-    }
-
-    public void setSublotNo(String sublotNo) {
-        this.sublotNo = sublotNo;
-    }
-
-    public Integer getBenficiaryCount() {
-        return benficiaryCount;
-    }
-
-    public void setBenficiaryCount(Integer benficiaryCount) {
-        this.benficiaryCount = benficiaryCount;
-    }
-
-    public Integer getDistributedPackets() {
-        return distributedPackets;
-    }
-
-    public void setDistributedPackets(Integer distributedPackets) {
-        this.distributedPackets = distributedPackets;
-    }
-
     public LocalDateTime getCreatedAt() {
         return createdAt;
     }
@@ -65,52 +41,5 @@ public class AWCDispatchDTO {
         this.createdAt = createdAt;
     }
 
-    public Long getDemandId() {
-        return demandId;
-    }
 
-    public void setDemandId(Long demandId) {
-        this.demandId = demandId;
-    }
-
-    public String getDemandName() {
-        return demandName;
-    }
-
-    public void setDemandName(String demandName) {
-        this.demandName = demandName;
-    }
-
-//    public List<Long> getAnganwadiCenters() {
-//        return anganwadiCenters;
-//    }
-//
-//    public void setAnganwadiCenters(List<Long> anganwadiCenters) {
-//        this.anganwadiCenters = anganwadiCenters;
-//    }
-//
-//    public List<AnganwadiCenterDTO> getAnganwadiCentersData() {
-//        return anganwadiCentersData;
-//    }
-//
-//    public void setAnganwadiCentersData(List<AnganwadiCenterDTO> anganwadiCentersData) {
-//        this.anganwadiCentersData = anganwadiCentersData;
-//    }
-
-
-    public Long getAnganwadiId() {
-        return anganwadiId;
-    }
-
-    public void setAnganwadiId(Long anganwadiId) {
-        this.anganwadiId = anganwadiId;
-    }
-
-    public String getAnganwadiName() {
-        return anganwadiName;
-    }
-
-    public void setAnganwadiName(String anganwadiName) {
-        this.anganwadiName = anganwadiName;
-    }
 }

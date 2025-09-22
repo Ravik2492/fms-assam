@@ -112,7 +112,12 @@ public class DispatchDetailController {
             entity.setSublotNo(generateNextSublotNo());
 
             // ✅ Update remaining packets
-            detail.setRemainingPackets(detail.getRemainingPackets() - dto.getDispatchPackets());
+            if(detail.getRemainingPackets()>=dto.getDispatchPackets()) {
+                Integer remainingPacktes = detail.getRemainingPackets() - dto.getDispatchPackets();
+                detail.setRemainingPackets(remainingPacktes);
+            } else {
+                throw new IllegalArgumentException("Dispatch packets exceed remaining packets.");
+            }
             dispatchDetailRepository.save(detail);
 
             // ✅ Save dispatch entity

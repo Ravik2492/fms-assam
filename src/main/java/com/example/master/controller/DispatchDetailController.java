@@ -69,7 +69,7 @@ public class DispatchDetailController {
         List<DispatchDetail> dispatchDetails = service.findByDemandId(demandId).stream()
                 .filter(dispatchDetail -> dispatchDetail.getCdpoId().getId().equals(projectId))
                 .filter(dispatchDetail -> dispatchDetail.getCdpoSupplierDispatches().stream()
-                        .anyMatch(dispatch -> dispatch.getSectorrId().getId().equals(sectorId)))
+                        .anyMatch(dispatch -> dispatch.getSectorr().getId().equals(sectorId)))
                 .collect(Collectors.toList());
 
         return ResponseEntity.ok(dispatchDetails);
@@ -124,7 +124,7 @@ public class DispatchDetailController {
             entity.setDemandId(dto.getDemandId());
             entity.setSector(dto.getSector());
             if(dto.getSectorId()!=null) {
-                entity.setSectorrId(sectorRepository.getById(dto.getSectorId()));
+                entity.setSectorr(sectorRepository.getById(dto.getSectorId()));
             }
             entity.setDispatchPackets(dto.getDispatchPackets());
             entity.setRemarks(dto.getRemarks());

@@ -116,7 +116,7 @@ public class DispatchDetailController {
                 Integer remainingPacktes = detail.getRemainingPackets() - dto.getDispatchPackets();
                 detail.setRemainingPackets(remainingPacktes);
             } else {
-                throw new IllegalArgumentException("Dispatch packets exceed remaining packets.");
+                throw new IllegalArgumentException("Dispatch packets "+dto.getDispatchPackets()+" exceed remaining packets."+detail.getRemainingPackets());
             }
             dispatchDetailRepository.save(detail);
 

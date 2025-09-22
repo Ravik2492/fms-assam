@@ -39,7 +39,7 @@ public class SiteIdentityController {
         return service.updateSiteIdentity(id, updated, logo, loginLogo);
     }
 
-    @PreAuthorize("hasAnyRole('ADMIN','AWC','NODAL','SUPPLIER') or hasAuthority('ROLE_MANAGE_USERS')")
+    @PreAuthorize("hasAnyRole('ADMIN','AWC','NODAL','SUPPLIER','SUPERVISOR','SUPERVISOR') or hasAuthority('ROLE_MANAGE_USERS')")
     @GetMapping("/{id}")
     @Operation(summary = "Fetch site attributes")
     public SiteIdentityy getSiteIdentity(@PathVariable Long id) {
@@ -47,7 +47,7 @@ public class SiteIdentityController {
     }
 
     @GetMapping("/logo/{id}")
-    @PreAuthorize("hasAnyRole('ADMIN','AWC','NODAL','SUPPLIER') or hasAuthority('ROLE_MANAGE_USERS')")
+    @PreAuthorize("hasAnyRole('ADMIN','AWC','NODAL','SUPPLIER','SUPERVISOR','SUPERVISOR') or hasAuthority('ROLE_MANAGE_USERS')")
     @Operation(summary = "Fetch site logo (for Login logo pass parameter: login_logo)")
     public ResponseEntity<Resource> serveFile(@PathVariable Long id, @RequestParam(required = false) String logoType) {
         try {

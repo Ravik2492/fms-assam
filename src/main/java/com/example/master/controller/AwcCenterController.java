@@ -40,14 +40,14 @@ public class AwcCenterController {
         service.deleteCenter(id);
     }
 
-    @PreAuthorize("hasAnyRole('ADMIN','AWC','NODAL','SUPPLIER')")
+    @PreAuthorize("hasAnyRole('ADMIN','AWC','NODAL','SUPPLIER','SUPERVISOR')")
     @GetMapping
     @Operation(summary = "List AWCs")
     public List<AwcCenterr> listCenters() {
         return service.listCenters();
     }
 
-    @PreAuthorize("hasAnyRole('ADMIN','AWC','NODAL','SUPPLIER')")
+    @PreAuthorize("hasAnyRole('ADMIN','AWC','NODAL','SUPPLIER','SUPERVISOR')")
     @GetMapping("/byDistrictSectorAndProjectIds")
     @Operation(summary = "List AWC centers by District, Sector, and Project IDs")
     public List<AwcCenterr> listAWCCenters(

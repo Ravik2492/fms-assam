@@ -40,22 +40,22 @@ public class SectorController {
         service.deleteSector(id);
     }
 
-    //@PreAuthorize("hasAnyRole('ADMIN','AWC','NODAL','SUPPLIER')")
+    //@PreAuthorize("hasAnyRole('ADMIN','AWC','NODAL','SUPPLIER','SUPERVISOR')")
     @GetMapping
     @Operation(summary = "List sectors")
     public List<Sectorr> listSectors() {
         return service.listSectors();
     }
 
-    //@PreAuthorize("hasAnyRole('ADMIN','AWC','NODAL','SUPPLIER')")
+    //@PreAuthorize("hasAnyRole('ADMIN','AWC','NODAL','SUPPLIER','SUPERVISOR')")
     @GetMapping("/byDistrictIds")
     @Operation(summary = "List sectors By District Ids")
     public List<Sectorr> listSectorsByDistrictIds(@RequestParam List<Long> districtIds) {
         return service.findByDistrictIdIn(districtIds);
     }
 
-    //@PreAuthorize("hasAnyRole('ADMIN','AWC','NODAL','SUPPLIER')")
-    //@PreAuthorize("hasAnyRole('ADMIN','AWC','NODAL','SUPPLIER')")
+    //@PreAuthorize("hasAnyRole('ADMIN','AWC','NODAL','SUPPLIER','SUPERVISOR')")
+    //@PreAuthorize("hasAnyRole('ADMIN','AWC','NODAL','SUPPLIER','SUPERVISOR')")
     @GetMapping("/byProjectIds")
     @Operation(summary = "List sectors By Project Ids")
     public List<Sectorr> listSectorsByProjectIds(@RequestParam List<Long> projectIds) {

@@ -47,7 +47,7 @@ public class UserController {
                 .map(id -> Map.of("id", id));
     }
 
-    //@PreAuthorize("hasAnyRole('ADMIN','AWC','NODAL','SUPPLIER') or hasAuthority('ROLE_MANAGE_USERS')")
+    //@PreAuthorize("hasAnyRole('ADMIN','AWC','NODAL','SUPPLIER','SUPERVISOR') or hasAuthority('ROLE_MANAGE_USERS')")
     @PostMapping("/users/reset-password")
     @Operation(summary = "Reset user by passing userid and updated password")
     public Mono<Void> resetPassword(@RequestBody CreateUserRequest req, HttpServletRequest request) {
@@ -79,7 +79,7 @@ public class UserController {
                 .thenReturn(ResponseEntity.noContent().build());
     }
 
-    @PreAuthorize("hasAnyRole('ADMIN','AWC','NODAL','SUPPLIER') or hasAuthority('ROLE_VIEW_USERS')")
+    @PreAuthorize("hasAnyRole('ADMIN','AWC','NODAL','SUPPLIER','SUPERVISOR','FCI') or hasAuthority('ROLE_VIEW_USERS')")
     @GetMapping("/users")
     @Operation(summary = "List users or fetch single user by passing username")
     public Mono<List<KcUserWithRole>> users(
@@ -92,7 +92,7 @@ public class UserController {
         return admin.searchUsers(username, first, max);
     }
 
-    @PreAuthorize("hasAnyRole('ADMIN','AWC','NODAL','SUPPLIER') or hasAuthority('ROLE_MANAGE_ROLES')")
+    @PreAuthorize("hasAnyRole('ADMIN','AWC','NODAL','SUPPLIER','SUPERVISOR') or hasAuthority('ROLE_MANAGE_ROLES')")
     @GetMapping("/users/by-role")
     @Operation(summary = "Search users by role")
     public Mono<List<KcUserWithRole>> getUsersByRole(

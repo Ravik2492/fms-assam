@@ -40,14 +40,14 @@ public class ProjectController {
         service.deleteProject(id);
     }
 
-    //@PreAuthorize("hasAnyRole('ADMIN','AWC','NODAL','SUPPLIER')")
+    //@PreAuthorize("hasAnyRole('ADMIN','AWC','NODAL','SUPPLIER','SUPERVISOR')")
     @GetMapping
     @Operation(summary = "List projects")
     public List<Project> listProjects() {
         return service.listProjects();
     }
 
-    //@PreAuthorize("hasAnyRole('ADMIN','AWC','NODAL','SUPPLIER')")
+    //@PreAuthorize("hasAnyRole('ADMIN','AWC','NODAL','SUPPLIER','SUPERVISOR')")
     @GetMapping("/byDistrictIds")
     @Operation(summary = "List projects By District Ids")
     public List<Project> listProjectsByDistrictIds(@RequestParam List<Long> districtIds) {

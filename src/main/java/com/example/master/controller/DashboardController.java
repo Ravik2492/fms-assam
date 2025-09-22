@@ -23,14 +23,14 @@ public class DashboardController {
     private DashboardService dashboardService;
 
     @GetMapping("/totals")
-    @PreAuthorize("hasAnyRole('ADMIN','AWC','NODAL','SUPPLIER') or hasAuthority('ROLE_MANAGE_USERS')")
+    @PreAuthorize("hasAnyRole('ADMIN','AWC','NODAL','SUPPLIER','SUPERVISOR') or hasAuthority('ROLE_MANAGE_USERS')")
     @Operation(summary = "Get total counts of AWCs, Sectors, Projects, and Demands")
     public Map<String, Long> getTotalCounts() {
         return dashboardService.getTotalCounts();
     }
 
     @GetMapping("/district-breakdown")
-    @PreAuthorize("hasAnyRole('ADMIN','AWC','NODAL','SUPPLIER') or hasAuthority('ROLE_MANAGE_USERS')")
+    @PreAuthorize("hasAnyRole('ADMIN','AWC','NODAL','SUPPLIER','SUPERVISOR') or hasAuthority('ROLE_MANAGE_USERS')")
     @Operation(summary = "Get number of sectors and projects in each district")
     public List<DistrictBreakdownDto> getDistrictBreakdown() {
         return dashboardService.getDistrictBreakdown();

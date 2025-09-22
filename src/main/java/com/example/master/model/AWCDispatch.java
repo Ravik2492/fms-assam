@@ -1,10 +1,14 @@
 package com.example.master.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
+import lombok.Data;
+
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "awc_dispatch")
+@Data
 public class AWCDispatch {
 
     @Id
@@ -14,6 +18,11 @@ public class AWCDispatch {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "anganwadi_id", nullable = false) // foreign key to AnganwadiCenter
     private AnganwadiCenter anganwadiCenter;
+
+    @ManyToOne
+    @JoinColumn(name = "cdpo_supplier_dispatch_id", nullable = false)
+    @JsonBackReference
+    private CDPOSupplierDispatch cdpoSupplierDispatch;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "demand_id", nullable = false)

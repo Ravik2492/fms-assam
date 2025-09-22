@@ -40,7 +40,7 @@ public class DistrictController {
         service.deleteDistrict(id);
     }
 
-    @PreAuthorize("hasAnyRole('ADMIN','AWC','NODAL','SUPPLIER')")
+    //@PreAuthorize("hasAnyRole('ADMIN','AWC','NODAL','SUPPLIER')")
     @GetMapping
     @Operation(summary = "List districts")
     public List<District> listDistricts() {

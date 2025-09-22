@@ -40,14 +40,14 @@ public class SectorController {
         service.deleteSector(id);
     }
 
-    @PreAuthorize("hasAnyRole('ADMIN','AWC','NODAL','SUPPLIER')")
+    //@PreAuthorize("hasAnyRole('ADMIN','AWC','NODAL','SUPPLIER')")
     @GetMapping
     @Operation(summary = "List sectors")
     public List<Sectorr> listSectors() {
         return service.listSectors();
     }
 
-    @PreAuthorize("hasAnyRole('ADMIN','AWC','NODAL','SUPPLIER')")
+    //@PreAuthorize("hasAnyRole('ADMIN','AWC','NODAL','SUPPLIER')")
     @GetMapping("/byDistrictIds")
     @Operation(summary = "List sectors By District Ids")
     public List<Sectorr> listSectorsByDistrictIds(@RequestParam List<Long> districtIds) {

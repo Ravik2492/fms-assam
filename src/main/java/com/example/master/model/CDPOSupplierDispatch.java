@@ -2,8 +2,11 @@ package com.example.master.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
+
+import java.util.List;
 
 @Entity
 @Table(name = "cdpo_supplier_dispatch")
@@ -22,6 +25,10 @@ public class CDPOSupplierDispatch {
     @JoinColumn(name = "dispatch_detail_id", nullable = false)
     @JsonBackReference
     private DispatchDetail dispatchDetail;
+
+    @OneToMany(mappedBy = "awcDispatch", cascade = CascadeType.ALL)
+    @JsonManagedReference
+    private List<AWCDispatch> awcDispatches;
 
     @Column(name = "sector")
     private String sector;

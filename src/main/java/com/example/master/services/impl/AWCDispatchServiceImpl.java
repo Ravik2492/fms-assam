@@ -3,12 +3,15 @@ package com.example.master.services.impl;
 import com.example.master.Dto.AWCDispatchDTO;
 import com.example.master.model.AWCDispatch;
 import com.example.master.model.AnganwadiCenter;
+import com.example.master.model.CDPOSupplierDispatch;
 import com.example.master.model.Demand;
 import com.example.master.repository.AWCDispatchRepository;
 import com.example.master.repository.AnganwadiCenterRepository;
+import com.example.master.repository.CDPOSupplierDispatchRepository;
 import com.example.master.repository.DemandRepository;
 import com.example.master.services.AWCDispatchService;
 import jakarta.persistence.EntityNotFoundException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,6 +23,9 @@ public class AWCDispatchServiceImpl implements AWCDispatchService {
     private final AWCDispatchRepository dispatchRepository;
     private final AnganwadiCenterRepository centerRepository;
     private final DemandRepository demandRepository;
+
+    @Autowired
+    private CDPOSupplierDispatchRepository cdpoSupplierDispatchRepository;
 
     public AWCDispatchServiceImpl(AWCDispatchRepository dispatchRepository,
                                   AnganwadiCenterRepository centerRepository,
@@ -37,6 +43,10 @@ public class AWCDispatchServiceImpl implements AWCDispatchService {
 
     @Override
     public List<AWCDispatchDTO> createDispatches(List<AWCDispatchDTO> dtos) {
+
+
+
+
         List<AWCDispatch> entities = dtos.stream()
                 .map(this::mapDtoToEntity)
                 .collect(Collectors.toList());
@@ -128,6 +138,14 @@ public class AWCDispatchServiceImpl implements AWCDispatchService {
                     .orElseThrow(() -> new EntityNotFoundException("Demand not found: " + dto.getDemandId()));
             entity.setDemand(demand);
         }
+
+        if (dto.getCdpoSupplierDispatchId() != null) {
+            CDPOSupplierDispatch cdpoSupplierDispatch = cdpoSupplierDispatchRepository.findById(dto.getCdpoSupplierDispatchId())
+                    .orElseThrow(() -> new EntityNotFoundException("CDPO Sector dispatch not found: " + dto.getDemandId()));
+            entity.setCdpoSupplierDispatch(cdpoSupplierDispatch);
+        }
+
+
 
         if (dto.getAnganwadiId() != null) {
             AnganwadiCenter center = centerRepository.findById(dto.getAnganwadiId())

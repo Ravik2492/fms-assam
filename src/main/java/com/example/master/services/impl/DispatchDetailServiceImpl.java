@@ -29,15 +29,10 @@ public class DispatchDetailServiceImpl implements DispatchDetailService {
 
     @Override
     public List<DispatchDetail> createDispatches(List<DispatchDetail> dispatches) {
-        Long next = 1L;
-        var last = repo.findTopByOrderByIdDesc();
-        if (last.isPresent()) {
-            next = last.get().getId() + 1;
-        }
+        Long next = 0L;
 
         for (DispatchDetail d : dispatches) {
-            d.setLotNumber("L-" + next);
-            next++;
+            d.setLotNumber("L-" + next++);
         }
 
         return repo.saveAll(dispatches);

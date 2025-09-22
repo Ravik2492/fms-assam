@@ -20,7 +20,7 @@ public class DispatchDetail {
     @Column(name = "demand_id", nullable = false)
     private Long demandId;
 
-    @Column(name = "lot_number", unique = true)
+    @Column(name = "lot_number")
     private String lotNumber; // L-1
 
     @ManyToOne

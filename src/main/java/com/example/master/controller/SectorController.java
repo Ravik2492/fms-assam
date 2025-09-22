@@ -54,7 +54,8 @@ public class SectorController {
         return service.findByDistrictIdIn(districtIds);
     }
 
-    @PreAuthorize("hasAnyRole('ADMIN','AWC','NODAL','SUPPLIER')")
+    //@PreAuthorize("hasAnyRole('ADMIN','AWC','NODAL','SUPPLIER')")
+    //@PreAuthorize("hasAnyRole('ADMIN','AWC','NODAL','SUPPLIER')")
     @GetMapping("/byProjectIds")
     @Operation(summary = "List sectors By Project Ids")
     public List<Sectorr> listSectorsByProjectIds(@RequestParam List<Long> projectIds) {

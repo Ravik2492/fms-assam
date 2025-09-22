@@ -7,6 +7,7 @@ import com.example.master.config.KeycloakUserService;
 import com.example.master.config.TokenHelper;
 import com.example.master.dtobj.Role;
 import com.example.master.entity.Project;
+import com.example.master.entity.Sectorr;
 import com.example.master.entity.UserMetadata;
 import com.example.master.event.DemandEventPublisher;
 import com.example.master.exception.NotFoundException;
@@ -45,7 +46,13 @@ public class DemandServiceImpl implements DemandService {
     private DispatchDetailRepository dispatchDetailRepository;
 
     @Autowired
+    private CDPOSupplierDispatchRepository cdpoSupplierDispatchRepository;
+
+    @Autowired
     private ProjectRepository projectRepository;
+
+    @Autowired
+    private SectorRepository sectorRepository;
 
     @Autowired
     private FileStorageService fileStorageService;
@@ -314,6 +321,47 @@ public class DemandServiceImpl implements DemandService {
         List<DispatchDetail> dispatchDetails = dispatchDetailRepository.findByCdpoId(project);
         List<Long> demandIds = dispatchDetails.stream()
                 .map(DispatchDetail::getDemandId)
+                .distinct() // optional: removes duplicates
+                .collect(Collectors.toList());
+
+        List<DemandResponseDTO> enrichedDemands = demandRepository.findByIdIn(demandIds)
+                .stream()
+                .map(demand -> {
+                    DemandResponseDTO dtoo = convertToDTO(demand);
+
+                    List<DispatchDetail> dispatchDetailss = dispatchDetailRepository.findByDemandId(demand.getId());
+                    List<DispatchDetailDTO> dispatchDTOs = dispatchDetailss.stream()
+                            .filter(dispatchDetail -> dispatchDetail.getCdpoId().getId().equals(Long.valueOf(metadata.getProjectId())))
+                            .map(detail -> {
+                                DispatchDetailDTO dto = new DispatchDetailDTO();
+                                dto.setDispatchId(detail.getId());
+                                dto.setDemandId(detail.getDemandId());
+                                dto.setBatchNumber(detail.getBatchNumber());
+                                dto.setLotNumber(detail.getLotNumber());
+                                dto.setCdpoId(detail.getCdpoId().getId()); // or name, etc.
+                                dto.setCdpoName(detail.getCdpoName());
+                                //dto.setRemarks(detail.getRemarks());
+                                dto.setNumberOfPackets(detail.getNumberOfPackets());
+                                return dto;
+                            })
+                            .collect(Collectors.toList());
+                    dtoo.setDispatchDetails(dispatchDTOs);
+                    //dispatchDTOs = new ArrayList<>();
+
+                    return dtoo;
+                })
+                .collect(Collectors.toList());
+        return enrichedDemands;
+    }
+
+    @Override
+    public List<DemandResponseDTO> getDispatchedDemandsForAWCC() {
+        String userid = TokenHelper.getUsername();
+        UserMetadata metadata = userMetadataRepository.getById(userid);
+        Sectorr sectorr = sectorRepository.getById(Long.valueOf(metadata.getSectorId()));
+        List<CDPOSupplierDispatch> dispatchDetails = cdpoSupplierDispatchRepository.findBySectorrId(sectorr);
+        List<Long> demandIds = dispatchDetails.stream()
+                .map(CDPOSupplierDispatch::getDemandId)
                 .distinct() // optional: removes duplicates
                 .collect(Collectors.toList());
 

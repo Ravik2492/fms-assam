@@ -16,6 +16,8 @@ public class DispatchDetailDTO {
     public Integer numberOfPackets;
     public String remarks;
 
+
+
     public Long getDemandId() {
         return demandId;
     }

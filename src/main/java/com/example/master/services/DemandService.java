@@ -24,5 +24,7 @@ public interface DemandService {
     List<DemandResponseDTO> getPendingDemandsForFCI();
     List<DemandResponseDTO> getAcceptedDemandsForSupplier();
     List<DemandResponseDTO> getManufacturedDemandsForCDPO();
+    List<DemandResponseDTO> getDispatchedDemandsForAWCC();
+
     List<DemandResponseDTO> getDispatchedDemandsForAWC();
 }

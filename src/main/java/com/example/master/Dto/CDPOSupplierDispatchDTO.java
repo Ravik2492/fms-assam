@@ -10,6 +10,7 @@ public class CDPOSupplierDispatchDTO {
     private Long demandId;
     private Long dispatchDetailId;
     private String sector;
+    private Long sectorId;
     private Integer dispatchPackets;
     private String remarks;
     private String sublotNo;

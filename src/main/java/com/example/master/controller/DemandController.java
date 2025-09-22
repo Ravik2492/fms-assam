@@ -358,6 +358,13 @@ public class DemandController {
 //        return ResponseEntity.ok(demands);
 //    }
 
+    @PreAuthorize("hasRole('SUPERVISOR')")
+    @GetMapping("/dispatched")
+    public ResponseEntity<List<DemandResponseDTO>> getDispatchedDemandss() {
+        logCurrentUserAuthorities("getDispatchedDemands");
+        return ResponseEntity.ok(demandService.getDispatchedDemandsForAWCC());
+    }
+
     @PreAuthorize("hasRole('AWC')")
     @GetMapping("/dispatched")
     public ResponseEntity<List<DemandResponseDTO>> getDispatchedDemands() {

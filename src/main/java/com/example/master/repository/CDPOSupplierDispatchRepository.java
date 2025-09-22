@@ -1,5 +1,6 @@
 package com.example.master.repository;
 
+import com.example.master.entity.Sectorr;
 import com.example.master.model.CDPOSupplierDispatch;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -13,6 +14,8 @@ public interface CDPOSupplierDispatchRepository extends JpaRepository<CDPOSuppli
     String findLastSublotNo();
 
     List<CDPOSupplierDispatch> findByDemandId(Long demandId);
+
+    List<CDPOSupplierDispatch> findBySectorrId(Sectorr sectorrId);
 
 
 }

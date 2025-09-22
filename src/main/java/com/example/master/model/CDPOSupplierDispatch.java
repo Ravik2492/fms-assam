@@ -1,5 +1,7 @@
 package com.example.master.model;
 
+import com.example.master.entity.Project;
+import com.example.master.entity.Sectorr;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -29,6 +31,11 @@ public class CDPOSupplierDispatch {
     @OneToMany(mappedBy = "cdpoSupplierDispatch", cascade = CascadeType.ALL)
     @JsonManagedReference
     private List<AWCDispatch> awcDispatches;
+
+    @ManyToOne
+    @JoinColumn(name = "sectorr_id", nullable = false)
+    @JsonManagedReference
+    private Sectorr sectorrId;
 
     @Column(name = "sector")
     private String sector;

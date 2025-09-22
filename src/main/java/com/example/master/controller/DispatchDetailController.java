@@ -8,10 +8,7 @@ import com.example.master.entity.Project;
 import com.example.master.entity.UserMetadata;
 import com.example.master.model.CDPOSupplierDispatch;
 import com.example.master.model.DispatchDetail;
-import com.example.master.repository.CDPOSupplierDispatchRepository;
-import com.example.master.repository.DispatchDetailRepository;
-import com.example.master.repository.ProjectRepository;
-import com.example.master.repository.UserMetadataRepository;
+import com.example.master.repository.*;
 import com.example.master.services.DemandService;
 import com.example.master.services.DispatchDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/demand-dispatches")
@@ -40,6 +38,9 @@ public class DispatchDetailController {
     private ProjectRepository projectRepository;
 
     @Autowired
+    private SectorRepository sectorRepository;
+
+    @Autowired
     private UserMetadataRepository userMetadataRepository;
 
     public DispatchDetailController(DispatchDetailService service){
@@ -54,6 +55,23 @@ public class DispatchDetailController {
         UserMetadata metadata = userMetadataRepository.getById(userid);
         List<DispatchDetail> dispatchDetails = service.findByDemandId(demandId).stream()
                 .filter(dispatchDetail -> dispatchDetail.getCdpoId().getId().equals(Long.valueOf(metadata.getProjectId()))).toList();
+        return ResponseEntity.ok(dispatchDetails);
+    }
+
+    @GetMapping("/by-demand-awc/{demandId}")
+    public ResponseEntity<List<DispatchDetail>> listByDemandAWC(@PathVariable Long demandId){
+
+        String userid = TokenHelper.getUsername();
+        UserMetadata metadata = userMetadataRepository.getById(userid);
+        Long projectId = Long.valueOf(metadata.getProjectId());
+        Long sectorId = Long.valueOf(metadata.getSectorId());
+
+        List<DispatchDetail> dispatchDetails = service.findByDemandId(demandId).stream()
+                .filter(dispatchDetail -> dispatchDetail.getCdpoId().getId().equals(projectId))
+                .filter(dispatchDetail -> dispatchDetail.getCdpoSupplierDispatches().stream()
+                        .anyMatch(dispatch -> dispatch.getSectorrId().getId().equals(sectorId)))
+                .collect(Collectors.toList());
+
         return ResponseEntity.ok(dispatchDetails);
     }
 
@@ -105,6 +123,9 @@ public class DispatchDetailController {
             entity.setDispatchDetail(detail);
             entity.setDemandId(dto.getDemandId());
             entity.setSector(dto.getSector());
+            if(dto.getSectorId()!=null) {
+                entity.setSectorrId(sectorRepository.getById(dto.getSectorId()));
+            }
             entity.setDispatchPackets(dto.getDispatchPackets());
             entity.setRemarks(dto.getRemarks());
 

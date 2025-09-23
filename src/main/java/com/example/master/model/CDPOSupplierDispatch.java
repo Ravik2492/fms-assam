@@ -43,6 +43,12 @@ public class CDPOSupplierDispatch {
     @Column(name = "dispatch_packets")
     private Integer dispatchPackets;
 
+    private Integer acceptedPackets;
+
+    private Integer remainingPackets;
+
+    private String acceptedRemarks;
+
     @Column(name = "remarks")
     private String remarks;
 

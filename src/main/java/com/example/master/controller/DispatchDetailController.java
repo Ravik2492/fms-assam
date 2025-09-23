@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
@@ -47,6 +48,25 @@ public class DispatchDetailController {
         this.service = service;
     }
 
+
+    @PostMapping("/bulk")
+    public ResponseEntity<List<DispatchDetail>> createBulk(@RequestBody List<DispatchDetailDTO> dtos) {
+        List<DispatchDetail> dispatches = dtos.stream().map(dto -> {
+            DispatchDetail d = new DispatchDetail();
+            d.setDemandId(dto.demandId);
+            d.setBatchNumber(dto.batchNumber);
+            d.setCdpoName(dto.cdpoName);
+
+            d.setCdpoId(projectRepository.getById(dto.cdpoId));
+            d.setNumberOfPackets(dto.numberOfPackets);
+            d.setRemarks(dto.remarks);
+            return d;
+        }).toList();
+
+        //demandService.updateStatus(dtos.get(0).demandId, "CDPO_DISPATCHED");
+        List<DispatchDetail> saved = service.createDispatches(dispatches);
+        return ResponseEntity.status(201).body(saved);
+    }
 
     @GetMapping("/by-demand/{demandId}")
     public ResponseEntity<List<DispatchDetail>> listByDemand(@PathVariable Long demandId){
@@ -91,23 +111,30 @@ public class DispatchDetailController {
         return ResponseEntity.ok(detail);
     }
 
-    @PostMapping("/bulk")
-    public ResponseEntity<List<DispatchDetail>> createBulk(@RequestBody List<DispatchDetailDTO> dtos) {
-        List<DispatchDetail> dispatches = dtos.stream().map(dto -> {
-            DispatchDetail d = new DispatchDetail();
-            d.setDemandId(dto.demandId);
-            d.setBatchNumber(dto.batchNumber);
-            d.setCdpoName(dto.cdpoName);
+    @PostMapping("/accept-awc/{id}/{dispatchId}")
+    public ResponseEntity<DispatchDetail> acceptAWC(@PathVariable("id") Long id,@PathVariable("dispatchId") Long dispatchId,
+                                                 @RequestParam("acceptedPackets") Integer acceptedPackets, @RequestParam("remarks") String remarks){
 
-            d.setCdpoId(projectRepository.getById(dto.cdpoId));
-            d.setNumberOfPackets(dto.numberOfPackets);
-            d.setRemarks(dto.remarks);
-            return d;
-        }).toList();
+        DispatchDetail detail = dispatchDetailRepository.getById(id);
 
-        //demandService.updateStatus(dtos.get(0).demandId, "CDPO_DISPATCHED");
-        List<DispatchDetail> saved = service.createDispatches(dispatches);
-        return ResponseEntity.status(201).body(saved);
+        Optional<CDPOSupplierDispatch> optionalDispatch = detail.getCdpoSupplierDispatches()
+                .stream()
+                .filter(csd -> csd.getId().equals(dispatchId))
+                .findFirst();
+
+        if (optionalDispatch.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        CDPOSupplierDispatch cdpoSupplierDispatch = optionalDispatch.get();
+        cdpoSupplierDispatch.setAcceptedPackets(acceptedPackets);
+        cdpoSupplierDispatch.setRemainingPackets(acceptedPackets);
+        cdpoSupplierDispatch.setAcceptedRemarks(remarks);
+
+        repository.save(cdpoSupplierDispatch); // Use correct repository
+
+        //Now return updated Dispatch detail entityentity
+        return ResponseEntity.ok(detail);
     }
 
 

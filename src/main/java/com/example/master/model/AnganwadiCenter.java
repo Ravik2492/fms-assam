@@ -4,9 +4,11 @@ import com.example.master.entity.District;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
+import lombok.Data;
 
 @Entity
 @Table(name = "anganwadi_centers")
+@Data
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class AnganwadiCenter {
 
@@ -35,85 +37,9 @@ public class AnganwadiCenter {
     @JsonBackReference
     private Sector sector;
 
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "awc_dispatch_id")
-//    @JsonBackReference
-//    private AWCDispatch awcDispatch;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "district_id")
     @JsonBackReference
     private District district;
 
-    public Sector getSector() {
-        return sector;
-    }
-
-    public void setSector(Sector sector) {
-        this.sector = sector;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getCenterName() {
-        return centerName;
-    }
-
-    public void setCenterName(String centerName) {
-        this.centerName = centerName;
-    }
-
-    public String getCenterAddress() {
-        return centerAddress;
-    }
-
-    public void setCenterAddress(String centerAddress) {
-        this.centerAddress = centerAddress;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public Supervisor getSupervisor() {
-        return supervisor;
-    }
-
-    public void setSupervisor(Supervisor supervisor) {
-        this.supervisor = supervisor;
-    }
-
-    public Cdpos getCdpo() {
-        return cdpo;
-    }
-
-    public void setCdpo(Cdpos cdpo) {
-        this.cdpo = cdpo;
-    }
-
-    public District getDistrict() {
-        return district;
-    }
-
-    public void setDistrict(District district) {
-        this.district = district;
-    }
-
-//    public AWCDispatch getAwcDispatch() {
-//        return awcDispatch;
-//    }
-//
-//    public void setAwcDispatch(AWCDispatch awcDispatch) {
-//        this.awcDispatch = awcDispatch;
-//    }
 }

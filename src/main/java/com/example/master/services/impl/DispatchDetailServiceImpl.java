@@ -18,27 +18,11 @@ public class DispatchDetailServiceImpl implements DispatchDetailService {
     public DispatchDetailServiceImpl(DispatchDetailRepository repo){ this.repo = repo; }
 
     @Override
-    public DispatchDetail createDispatch(DispatchDetail d) {
-        // generate lotNumber like L-<n>
-        Long next = 1L;
-        var last = repo.findTopByOrderByIdDesc();
-        if (last.isPresent()) next = last.get().getId() + 1;
-        d.setLotNumber("L-" + next);
-        return repo.save(d);
-    }
-
-    @Override
     public List<DispatchDetail> createDispatches(List<DispatchDetail> dispatches) {
-        Long next = 1L;
 
-        for (DispatchDetail d : dispatches) {
-            d.setLotNumber("L-" + next);
-            next++;
-        }
 
         return repo.saveAll(dispatches);
     }
-
 
     @Override
     public List<DispatchDetail> findByDemandId(Long demandId) {

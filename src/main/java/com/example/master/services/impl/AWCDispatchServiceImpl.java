@@ -1,14 +1,12 @@
 package com.example.master.services.impl;
 
 import com.example.master.Dto.AWCDispatchDTO;
+import com.example.master.entity.AwcCenterr;
 import com.example.master.model.AWCDispatch;
 import com.example.master.model.AnganwadiCenter;
 import com.example.master.model.CDPOSupplierDispatch;
 import com.example.master.model.Demand;
-import com.example.master.repository.AWCDispatchRepository;
-import com.example.master.repository.AnganwadiCenterRepository;
-import com.example.master.repository.CDPOSupplierDispatchRepository;
-import com.example.master.repository.DemandRepository;
+import com.example.master.repository.*;
 import com.example.master.services.AWCDispatchService;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +21,9 @@ public class AWCDispatchServiceImpl implements AWCDispatchService {
     private final AWCDispatchRepository dispatchRepository;
     private final AnganwadiCenterRepository centerRepository;
     private final DemandRepository demandRepository;
+
+    @Autowired
+    private AwcCenterRepository awcCenterRepository;
 
     @Autowired
     private CDPOSupplierDispatchRepository cdpoSupplierDispatchRepository;
@@ -89,9 +90,9 @@ public class AWCDispatchServiceImpl implements AWCDispatchService {
 
         // Update Anganwadi center if provided
         if (dto.getAnganwadiId() != null) {
-            AnganwadiCenter center = centerRepository.findById(dto.getAnganwadiId())
-                    .orElseThrow(() -> new EntityNotFoundException("Anganwadi not found: " + dto.getAnganwadiId()));
-            existing.setAnganwadiCenter(center);
+            AwcCenterr center = awcCenterRepository.findById(dto.getAnganwadiId())
+                    .orElseThrow(() -> new EntityNotFoundException("AWC not found: " + dto.getAnganwadiId()));
+            existing.setAwcCenterr(center);
         }
 
         return mapEntityToDto(dispatchRepository.save(existing));
@@ -112,16 +113,15 @@ public class AWCDispatchServiceImpl implements AWCDispatchService {
         dto.setSublotNo(entity.getSublotNo());
         dto.setBenficiaryCount(entity.getBenficiaryCount());
         dto.setDistributedPackets(entity.getDistributedPackets());
-        dto.setCreatedAt(entity.getCreatedAt());
 
         if (entity.getDemand() != null) {
             dto.setDemandId(entity.getDemand().getId());
 //            dto.setDemandName(entity.getDemand().getName()); // optional
         }
 
-        if (entity.getAnganwadiCenter() != null) {
-            dto.setAnganwadiId(entity.getAnganwadiCenter().getId());
-            dto.setAnganwadiName(entity.getAnganwadiCenter().getCenterName());
+        if (entity.getAwcCenterr() != null) {
+            dto.setAnganwadiId(entity.getAwcCenterr().getId());
+            dto.setAnganwadiName(entity.getAwcCenterr().getCenterName());
         }
 
         return dto;
@@ -148,9 +148,9 @@ public class AWCDispatchServiceImpl implements AWCDispatchService {
 
 
         if (dto.getAnganwadiId() != null) {
-            AnganwadiCenter center = centerRepository.findById(dto.getAnganwadiId())
-                    .orElseThrow(() -> new EntityNotFoundException("Anganwadi not found: " + dto.getAnganwadiId()));
-            entity.setAnganwadiCenter(center);
+            AwcCenterr center = awcCenterRepository.findById(dto.getAnganwadiId())
+                    .orElseThrow(() -> new EntityNotFoundException("AWC not found: " + dto.getAnganwadiId()));
+            entity.setAwcCenterr(center);
         }
 
         return entity;

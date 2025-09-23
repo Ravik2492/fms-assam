@@ -1,9 +1,11 @@
 package com.example.master.model;
 
 import jakarta.persistence.*;
+import lombok.Data;
 
 @Entity
 @Table(name = "awc_centers")
+@Data
 public class AwcCenter {
 
     @Id
@@ -17,27 +19,4 @@ public class AwcCenter {
     @JoinColumn(name = "supervisor_id", nullable = false)
     private Supervisor supervisor;
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getCenterName() {
-        return centerName;
-    }
-
-    public void setCenterName(String centerName) {
-        this.centerName = centerName;
-    }
-
-    public Supervisor getSupervisor() {
-        return supervisor;
-    }
-
-    public void setSupervisor(Supervisor supervisor) {
-        this.supervisor = supervisor;
-    }
 }

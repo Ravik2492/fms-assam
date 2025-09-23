@@ -1,5 +1,6 @@
 package com.example.master.model;
 
+import com.example.master.entity.AwcCenterr;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -16,8 +17,10 @@ public class AWCDispatch {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "anganwadi_id", nullable = false) // foreign key to AnganwadiCenter
-    private AnganwadiCenter anganwadiCenter;
+    @JoinColumn(name = "awc_centerss_id", nullable = false) // foreign key to AnganwadiCenter
+    private AwcCenterr awcCenterr;
+
+    private String centerName;
 
     @ManyToOne
     @JoinColumn(name = "cdpo_supplier_dispatch_id", nullable = false)
@@ -27,67 +30,15 @@ public class AWCDispatch {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "demand_id", nullable = false)
     private Demand demand;
-
-    private String sublotNo;
-    private Integer benficiaryCount;
     private Integer distributedPackets;
+    private Integer benficiaryCount;
     private LocalDateTime createdAt;
+
+    @Transient
+    private String sublotNo;
 
     @PrePersist
     protected void onCreate() {
         this.createdAt = LocalDateTime.now();
-    }
-
-    // Getters & Setters
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public AnganwadiCenter getAnganwadiCenter() {
-        return anganwadiCenter;
-    }
-
-    public void setAnganwadiCenter(AnganwadiCenter anganwadiCenter) {
-        this.anganwadiCenter = anganwadiCenter;
-    }
-
-    public Demand getDemand() {
-        return demand;
-    }
-
-    public void setDemand(Demand demand) {
-        this.demand = demand;
-    }
-
-    public String getSublotNo() {
-        return sublotNo;
-    }
-
-    public void setSublotNo(String sublotNo) {
-        this.sublotNo = sublotNo;
-    }
-
-    public Integer getBenficiaryCount() {
-        return benficiaryCount;
-    }
-
-    public void setBenficiaryCount(Integer benficiaryCount) {
-        this.benficiaryCount = benficiaryCount;
-    }
-
-    public Integer getDistributedPackets() {
-        return distributedPackets;
-    }
-
-    public void setDistributedPackets(Integer distributedPackets) {
-        this.distributedPackets = distributedPackets;
-    }
-
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
     }
 }

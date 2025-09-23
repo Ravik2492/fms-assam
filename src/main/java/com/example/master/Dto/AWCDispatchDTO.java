@@ -7,14 +7,11 @@ import java.util.List;
 
 @Data
 public class AWCDispatchDTO {
-    private Long id;
-    private String sublotNo;
     private Integer benficiaryCount;
     private Integer distributedPackets;
     private Long cdpoSupplierDispatchId;
     private Long demandId;
-    private Long anganwadiId;
-    private String anganwadiName;
+    private Long awcId;
 
 
 

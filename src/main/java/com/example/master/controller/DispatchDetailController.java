@@ -1,4 +1,3 @@
-// DispatchDetailController.java
 package com.example.master.controller;
 
 import com.example.master.Dto.AWCDispatchDTO;
@@ -204,17 +203,18 @@ public class DispatchDetailController {
         AWCDispatchDTO dtoObj = dtos.get(0);
         CDPOSupplierDispatch cdpoSupplierDispatch = repository.findById(dtoObj.getCdpoSupplierDispatchId())
                 .orElseThrow(() -> new EntityNotFoundException("CDPO Sector dispatch not found: " + dtoObj.getDemandId()));
-        AwcCenterr center = awcCenterRepository.findById(dtoObj.getAnganwadiId())
-                .orElseThrow(() -> new EntityNotFoundException("AWC not found: " + dtoObj.getAnganwadiId()));
+        AwcCenterr center = awcCenterRepository.findById(dtoObj.getAwcId())
+                .orElseThrow(() -> new EntityNotFoundException("AWC not found: " + dtoObj.getAwcId()));
         Demand demand = demandRepository.findById(dtoObj.getDemandId())
                 .orElseThrow(() -> new EntityNotFoundException("Demand not found: " + dtoObj.getDemandId()));
 
         List<AWCDispatch> dispatches = new ArrayList<>();
         for (AWCDispatchDTO dto : dtos) {
             AWCDispatch entity = new AWCDispatch();
-            entity.setSublotNo(dto.getSublotNo());
+            entity.setSublotNo(cdpoSupplierDispatch.getSublotNo());
             entity.setBenficiaryCount(dto.getBenficiaryCount());
             entity.setDistributedPackets(dto.getDistributedPackets());
+            entity.setCenterName(center.getCenterName());
 
             if(cdpoSupplierDispatch.getRemainingPackets()>=dto.getDistributedPackets()) {
                 Integer remainingPacktes = cdpoSupplierDispatch.getRemainingPackets() - dto.getDistributedPackets();

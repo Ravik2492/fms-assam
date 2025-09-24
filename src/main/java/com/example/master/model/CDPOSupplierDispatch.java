@@ -34,7 +34,7 @@ public class CDPOSupplierDispatch {
 
     @ManyToOne
     @JoinColumn(name = "sectorr_id", nullable = false)
-    @JsonBackReference
+    @JsonManagedReference
     private Sectorr sectorr;
 
     @Column(name = "sector")

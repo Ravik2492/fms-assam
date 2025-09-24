@@ -40,4 +40,11 @@ public class LabReportServiceImpl implements LabReportService {
         return fileStorageService.loadFile(filePath);
     }
 
+    public Resource loadLabReportQRById(Long id) {
+        LabReport identity = repo.findByDemandId(id).get(0);
+
+        String filePath = identity.getQrCodePath();
+        return fileStorageService.loadFile(filePath);
+    }
+
 }

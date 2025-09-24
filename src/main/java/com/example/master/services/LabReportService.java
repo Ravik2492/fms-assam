@@ -12,4 +12,6 @@ public interface LabReportService {
 
     Resource loadLabReportById(Long id);
 
+    Resource loadLabReportQRById(Long id);
+
 }

@@ -1,10 +1,13 @@
 package com.example.master.model;
 
 import jakarta.persistence.*;
+import lombok.Data;
+
 import java.time.LocalDate;
 
 @Entity
 @Table(name = "lab_reports")
+@Data
 public class LabReport {
 
     @Id
@@ -19,6 +22,8 @@ public class LabReport {
     private String remarks;
 
     private String filePath; // uploaded file path
+    private String qrCodePath; // uploaded file path
+
 
     // ✅ Relation with BatchDetail (not IngredientDetail anymore)
 //    @OneToOne(mappedBy = "labReport", fetch = FetchType.LAZY)

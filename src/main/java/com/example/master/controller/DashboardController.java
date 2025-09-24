@@ -19,7 +19,7 @@ import java.util.Map;
 @Tag(name = "FMS RJ-DASHBOARD", description = "APIs to get dashboard data")
 public class DashboardController {
 
-   /* @Autowired
+    @Autowired
     private DashboardService dashboardService;
 
     @GetMapping("/totals")
@@ -35,6 +35,5 @@ public class DashboardController {
     public List<DistrictBreakdownDto> getDistrictBreakdown() {
         return dashboardService.getDistrictBreakdown();
     }
-    */
 }
 

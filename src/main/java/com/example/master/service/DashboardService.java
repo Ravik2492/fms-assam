@@ -1,18 +1,33 @@
 package com.example.master.service;
 
+import com.example.master.config.TokenHelper;
+import com.example.master.dtobj.DistrictBreakdownDto;
+import com.example.master.dtobj.Role;
+import com.example.master.entity.AwcCenterr;
+import com.example.master.entity.District;
+import com.example.master.entity.UserMetadata;
+import com.example.master.model.Demand;
+import com.example.master.model.DemandCdpoDetail;
+import com.example.master.repository.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Service
 public class DashboardService {
 
-    /*@Autowired
+    @Autowired
     private AwcCenterRepository awcRepo;
     @Autowired
     private SectorRepository sectorRepo;
     @Autowired
     private ProjectRepository projectRepo;
     @Autowired
-    private DemandRequestRepository demandRepo;
+    private DemandRepository demandRepo;
     @Autowired
     private DistrictRepository districtRepo;
 
@@ -34,23 +49,19 @@ public class DashboardService {
             UserMetadata metadata = userMetadataRepository.findById(username)
                     .orElseThrow(() -> new RuntimeException("No AWC center assigned to this user."));
             Long awcId = Long.valueOf(metadata.getAwc());
-            AwcCenter center = awcRepo.findById(awcId).orElseThrow(() -> new RuntimeException("No AWC center found"));
-            List<DemandRequest> demands = demandRepo.findByAwcCenterId(awcId);
+            AwcCenterr center = awcRepo.findById(awcId).orElseThrow(() -> new RuntimeException("No AWC center found"));
+            List<Demand> demands = demandRepo.findAll();//findByAwcCenterId(awcId);
             Long totalDemand = Long.valueOf(demands.size());
             Long totalRequestedPackets = 0l;
             Long totalDistributePackets = 0l;
             Long totalAvailablePackets = 0l;
-            for (DemandRequest demand : demands) {
-                if (!demand.getBatches().isEmpty()) {
-                    Batch batch = demand.getBatches().get(0);
-                    List<Dispatch> dispatches = batch.getDispatches().stream()
-                            .filter(dispatch -> dispatch.getAwcCenterName() != null &&
-                                    dispatch.getAwcCenterName().equals(center.getCenterName()))
-                            .toList();
-                    for (Dispatch dispatch : dispatches) {
-                        totalRequestedPackets += dispatch.getRequestedPackets();
-                        totalDistributePackets += dispatch.getPacketsToDispatch();
-                        totalAvailablePackets += dispatch.getRemainingPacketCount().longValue();
+            for (Demand demand : demands) {
+                if (!demand.getCdpoDetails().isEmpty()) {
+                    for (DemandCdpoDetail dispatch : demand.getCdpoDetails()) {
+                        totalRequestedPackets += dispatch.getQuantity();
+                        //totalDistributePackets += dispatch.getPacketsToDispatch();//need to remove but first check if anything causes problems
+                        //totalDistributePackets += dispatch.getDistributions().stream().mapToInt(PacketDistribution::getDistributedPacketCount).sum();
+                        //totalAvailablePackets += dispatch.getRemainingPacketCount().longValue();
                     }
                 }
             }
@@ -61,9 +72,27 @@ public class DashboardService {
 
         } else {
             counts.put("awcs", awcRepo.count());
+            counts.put("districts", districtRepo.count());
             counts.put("sectors", sectorRepo.count());
             counts.put("projects", projectRepo.count());
             counts.put("demands", demandRepo.count());
+            Long totalRequestedPackets = 0l;
+            Long totalDistributePackets = 0l;
+            Long totalAvailablePackets = 0l;
+            for (Demand demand : demandRepo.findAll()) {
+                if (!demand.getCdpoDetails().isEmpty()) {
+                    //Batch batch = demand.getBatches().get(0);
+                    for (DemandCdpoDetail detail : demand.getCdpoDetails()) {
+                        totalRequestedPackets += detail.getQuantity();
+                        //totalDistributePackets += dispatch.getPacketsToDispatch();//need to remove but first check if anything causes problems
+                        //totalDistributePackets += dispatch.getDistributions().stream().mapToInt(PacketDistribution::getDistributedPacketCount).sum();
+                        //totalAvailablePackets += dispatch.getRemainingPacketCount().longValue();
+                    }
+                }
+            }
+            counts.put("total_requested_packets", totalRequestedPackets);
+            counts.put("total_distribute_packets", totalDistributePackets);
+            counts.put("total_available_packets", totalAvailablePackets);
         }
         return counts;
     }
@@ -85,6 +114,6 @@ public class DashboardService {
         }
 
         return breakdown;
-    }*/
+    }
 }
 

@@ -18,6 +18,7 @@ public class AWCDispatch {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "awc_centerss_id", nullable = false) // foreign key to AnganwadiCenter
+    @JsonBackReference
     private AwcCenterr awcCenterr;
 
     private String centerName;

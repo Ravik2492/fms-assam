@@ -128,6 +128,7 @@ public class DemandFlowService {
 
         repository.save(cdpoSupplierDispatch); // Use correct repository
 
+        demandService.updateStatus(detail.getDemandId(), "SUPERVISOR_ACCEPTED");
         //Now return updated Dispatch detail entityentity
         return ResponseEntity.ok(detail);
     }
@@ -212,7 +213,7 @@ public class DemandFlowService {
             dispatches.add(savedEntity);
         }
         // ✅ Update demand status (assuming all DTOs share the same demandId)
-        demandService.updateStatus(dtos.get(0).getDemandId(), "AWC_DISTRIBUTED");
+        demandService.updateStatus(dtos.get(0).getDemandId(), "SUPERVISOR_DISTRIBUTED");
         return ResponseEntity.status(HttpStatus.CREATED).body(cdpoSupplierDispatch);
     }
 }

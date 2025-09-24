@@ -52,7 +52,7 @@ public class CDPOSupplierDispatch {
     @Column(name = "remarks")
     private String remarks;
 
-    @Column(name = "sublot_no", unique = true, nullable = false)
+    @Column(name = "sublot_no", nullable = false)
     private String sublotNo;
 
     // getters & setters

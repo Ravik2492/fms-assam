@@ -35,7 +35,7 @@ public class LabReportController {
     public LabReportController(LabReportService service){ this.service = service; }
 
     @PostMapping
-    public ResponseEntity<LabReport> create(@RequestBody LabReportDTO dto, @RequestPart("authorizationDoc") MultipartFile authorizationDoc){
+    public ResponseEntity<LabReport> create(@RequestPart LabReportDTO dto, @RequestPart("authorizationDoc") MultipartFile authorizationDoc){
         LabReport lr = new LabReport();
         lr.setDemandId(dto.demandId);
         lr.setLabName(dto.getLabName());

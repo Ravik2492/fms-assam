@@ -6,6 +6,7 @@ import com.example.master.model.Demand;
 import com.example.master.model.ProductCommodityQuantity;
 import com.example.master.services.DemandService;
 import io.swagger.v3.oas.annotations.Operation;
+import org.springframework.beans.factory.BeanFactoryUtils;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -159,7 +160,7 @@ public class DemandController {
     }
 
 
-    @PreAuthorize("hasAnyRole('ADMIN','DWCD')")
+    @PreAuthorize("hasAnyRole('ADMIN','DWCD','SUPPLIER')")
     @GetMapping
     public ResponseEntity<List<DemandResponseDTO>> getAllDemands() {
         return ResponseEntity.ok(demandService.getAllDemands());
@@ -208,7 +209,7 @@ public class DemandController {
     }
 
     // All authenticated roles can view a specific demand
-    @PreAuthorize("hasAnyRole('ADMIN','DWCD','FCI','SUPPLIER','CDPO','AWC')")
+    @PreAuthorize("hasAnyRole('ADMIN','DWCD','FCI','SUPPLIER','CDPO','AWC','SUPERVISOR')")
     @GetMapping("/{id}")
     public ResponseEntity<Optional<DemandResponseDTO>> getDemandById(@PathVariable Long id) {
         logCurrentUserAuthorities("getDemandById");

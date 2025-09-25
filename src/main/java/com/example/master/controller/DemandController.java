@@ -1,6 +1,7 @@
 package com.example.master.controller;
 
 import com.example.master.Dto.*;
+import com.example.master.entity.DemandStatuses;
 import com.example.master.model.Demand;
 import com.example.master.model.ProductCommodityQuantity;
 import com.example.master.services.DemandService;
@@ -212,6 +213,13 @@ public class DemandController {
     public ResponseEntity<Optional<DemandResponseDTO>> getDemandById(@PathVariable Long id) {
         logCurrentUserAuthorities("getDemandById");
         Optional<DemandResponseDTO> demand = demandService.getDemandById(id);
+        return ResponseEntity.ok(demand);
+    }
+
+
+    @GetMapping("/track-demand/{id}")
+    public ResponseEntity<List<DemandStatuses>> getDemandTrackById(@PathVariable Long id) {
+        List<DemandStatuses> demand = demandService.getDemandStatusesById(id);
         return ResponseEntity.ok(demand);
     }
 

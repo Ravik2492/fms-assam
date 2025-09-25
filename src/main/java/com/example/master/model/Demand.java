@@ -1,10 +1,12 @@
 package com.example.master.model;
 
+import com.example.master.entity.DemandStatuses;
 import com.example.master.entity.District;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+import lombok.Data;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -13,6 +15,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "demands")
+@Data
 public class Demand {
 
     @Id
@@ -40,6 +43,10 @@ public class Demand {
 
     @Column(name = "supplier_id")
     private String supplier;
+
+    @OneToMany(mappedBy = "demandIds", cascade = CascadeType.ALL)
+    @JsonManagedReference
+    private List<DemandStatuses> statuses;
 
     @Column(name = "supplier_name")
     private String supplierName;

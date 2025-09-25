@@ -6,6 +6,7 @@ import com.example.master.Dto.DemandProduct;
 import com.example.master.config.KeycloakUserService;
 import com.example.master.config.TokenHelper;
 import com.example.master.dtobj.Role;
+import com.example.master.entity.DemandStatuses;
 import com.example.master.entity.Project;
 import com.example.master.entity.Sectorr;
 import com.example.master.entity.UserMetadata;
@@ -39,6 +40,9 @@ public class DemandServiceImpl implements DemandService {
     private final DemandCategoryRepository demandCategoryRepository;
     private final BeneficiaryRepository beneficiaryRepository;
     private final FciRepository fciRepository;
+
+    @Autowired
+    private DemandStatusesRepository demandStatusesRepository;
 
     @Autowired
     private UserMetadataRepository userMetadataRepository;
@@ -234,6 +238,10 @@ public class DemandServiceImpl implements DemandService {
 //                .orElseThrow(() -> new NotFoundException("Demand not found with id: " + id));
     }
 
+    public List<DemandStatuses> getDemandStatusesById(Long id) {
+        return demandRepository.findById(id).get().getStatuses();
+    }
+
     @Override
     public void deleteDemand(Long id) {
         if (!demandRepository.existsById(id)) {
@@ -251,6 +259,18 @@ public class DemandServiceImpl implements DemandService {
         // Update the status
         demand.setStatus(status);
         demand.setUpdatedAt(LocalDateTime.now());
+
+        //update status
+        DemandStatuses demandStatuses = new DemandStatuses();
+        demandStatuses.setDemandIds(demand);
+        demandStatuses.setDemandStatus(status);
+        //if(role.equalsIgnoreCase("awc")) {
+        demandStatuses.setEntityName(TokenHelper.getUsername());
+        //}
+        demandStatuses.setStatusDate(LocalDateTime.now());
+
+        demandStatusesRepository.save(demandStatuses);
+
 
         // Set workflow timestamps based on status
         switch (status) {

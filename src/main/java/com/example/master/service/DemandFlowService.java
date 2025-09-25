@@ -125,6 +125,8 @@ public class DemandFlowService {
         detail.setRemainingPackets(acceptedPackets);
         detail.setAcceptedRemarks(remarks);
         DispatchDetail saved = dispatchDetailRepository.save(detail);
+
+        demandService.updateStatus(detail.getDemandId(), "CDPO_ACCEPTED");
         return ResponseEntity.ok(detail);
     }
 

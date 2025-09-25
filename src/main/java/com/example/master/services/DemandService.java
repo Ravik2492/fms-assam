@@ -3,6 +3,7 @@ package com.example.master.services;
 import com.example.master.Dto.DemandDTO;
 import com.example.master.Dto.DemandResponseDTO;
 import com.example.master.model.Demand;
+import org.springframework.core.io.Resource;
 import org.springframework.web.multipart.MultipartFile;
 
 
@@ -13,6 +14,11 @@ public interface DemandService {
     Demand createDemand(DemandDTO dto, MultipartFile authorizationDoc, MultipartFile authorizationDocFci);
     List<DemandResponseDTO> getAllDemands();
     Optional<DemandResponseDTO> getDemandById(Long id);
+
+    public Resource loadFCIReportById(Long demandId);
+
+    public Resource loadSupplierReportById(Long demandId);
+
     void deleteDemand(Long id);
     Demand updateStatus(Long id, String status);
 

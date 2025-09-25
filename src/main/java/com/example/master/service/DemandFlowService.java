@@ -14,6 +14,7 @@ import com.example.master.repository.*;
 import com.example.master.services.DemandService;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -54,6 +55,12 @@ public class DemandFlowService {
     @Autowired
     private DemandRepository demandRepository;
 
+    @Autowired
+    private QRCodeService qrCodeService;
+
+    @Autowired
+    private FileStorageService fileStorageService;
+
     public ResponseEntity<List<DispatchDetail>> createBulk(List<DispatchDetailDTO> dtos) {
         AtomicLong next = new AtomicLong(1);
         List<DispatchDetail> dispatches = dtos.stream().map(dto -> {
@@ -65,6 +72,11 @@ public class DemandFlowService {
             d.setCdpoId(projectRepository.getById(dto.cdpoId));
             d.setNumberOfPackets(dto.numberOfPackets);
             d.setRemarks(dto.remarks);
+
+            String qrUrl = "https://snp-assam.eighteenpixels.com/qr/"+dto.demandId+"-"+d.getLotNumber();
+            String qrPath = qrCodeService.generate(qrUrl);// need to add url path
+            d.setQrCodePath(qrPath);
+
             return d;
         }).toList();
 
@@ -79,6 +91,14 @@ public class DemandFlowService {
         List<DispatchDetail> dispatchDetails = dispatchDetailRepository.findByDemandId(demandId).stream()
                 .filter(dispatchDetail -> dispatchDetail.getCdpoId().getId().equals(Long.valueOf(metadata.getProjectId()))).toList();
         return ResponseEntity.ok(dispatchDetails);
+    }
+
+    public Resource getDispatchedQR(Long demandId, Long dispatchId){
+
+        List<DispatchDetail> dispatchDetails = dispatchDetailRepository.findByDemandId(demandId).stream()
+                .filter(dispatchDetail -> dispatchDetail.getId().equals(Long.valueOf(dispatchId))).toList();
+        String filePath = dispatchDetails.get(0).getQrCodePath();
+        return fileStorageService.loadFile(filePath);
     }
 
     public ResponseEntity<List<DispatchDetail>> listByDemandAWC(Long demandId){

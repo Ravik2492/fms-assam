@@ -16,6 +16,7 @@ import com.example.master.repository.*;
 import com.example.master.service.FileStorageService;
 import com.example.master.services.DemandService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -200,6 +201,22 @@ public class DemandServiceImpl implements DemandService {
 
         // Save the updated demand
         demandRepository.save(demand);
+    }
+
+    public Resource loadFCIReportById(Long demandId) {
+        Demand demand = demandRepository.findById(demandId)
+                .orElseThrow(() -> new RuntimeException("Demand not found"));
+
+        String filePath = demand.getFciDocs();
+        return fileStorageService.loadFile(filePath);
+    }
+
+    public Resource loadSupplierReportById(Long demandId) {
+        Demand demand = demandRepository.findById(demandId)
+                .orElseThrow(() -> new RuntimeException("Demand not found"));
+
+        String filePath = demand.getSupplierDocs();
+        return fileStorageService.loadFile(filePath);
     }
 
     @Override

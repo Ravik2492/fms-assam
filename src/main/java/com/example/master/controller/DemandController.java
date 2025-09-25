@@ -4,6 +4,11 @@ import com.example.master.Dto.*;
 import com.example.master.model.Demand;
 import com.example.master.model.ProductCommodityQuantity;
 import com.example.master.services.DemandService;
+import io.swagger.v3.oas.annotations.Operation;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -15,6 +20,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.nio.file.Files;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -156,6 +162,48 @@ public class DemandController {
     @GetMapping
     public ResponseEntity<List<DemandResponseDTO>> getAllDemands() {
         return ResponseEntity.ok(demandService.getAllDemands());
+    }
+
+    @GetMapping("/fci-authorization-file/{id}")
+    @Operation(summary = "Fetch authorization letter file by demand id")
+    public ResponseEntity<Resource> serveeQRFile(@PathVariable Long id) {
+        try {
+            Resource resource = demandService.loadFCIReportById(id);
+
+            String contentType = Files.probeContentType(resource.getFile().toPath());
+            if (contentType == null) {
+                contentType = "application/octet-stream";
+            }
+
+            return ResponseEntity.ok()
+                    .contentType(MediaType.parseMediaType(contentType))
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=\"" + resource.getFilename() + "\"")
+                    .body(resource);
+
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
+    @GetMapping("/supplier-file/{id}")
+    @Operation(summary = "Fetch supplier report file by demand id")
+    public ResponseEntity<Resource> serveQRFile(@PathVariable Long id) {
+        try {
+            Resource resource = demandService.loadSupplierReportById(id);
+
+            String contentType = Files.probeContentType(resource.getFile().toPath());
+            if (contentType == null) {
+                contentType = "application/octet-stream";
+            }
+
+            return ResponseEntity.ok()
+                    .contentType(MediaType.parseMediaType(contentType))
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=\"" + resource.getFilename() + "\"")
+                    .body(resource);
+
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
     // All authenticated roles can view a specific demand

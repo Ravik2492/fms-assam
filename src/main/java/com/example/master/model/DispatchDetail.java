@@ -41,6 +41,9 @@ public class DispatchDetail {
     private Integer remainingPackets;
 
     private String acceptedRemarks;
+
+    private String qrCodePath;
+
     private String remarks;
 
     @Column(name = "batch_number")

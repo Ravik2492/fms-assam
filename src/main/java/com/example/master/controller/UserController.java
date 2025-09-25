@@ -79,7 +79,7 @@ public class UserController {
                 .thenReturn(ResponseEntity.noContent().build());
     }
 
-    @PreAuthorize("hasAnyRole('ADMIN','AWC','NODAL','SUPPLIER','SUPERVISOR','FCI') or hasAuthority('ROLE_VIEW_USERS')")
+    //@PreAuthorize("hasAnyRole('ADMIN','AWC','NODAL','SUPPLIER','SUPERVISOR','FCI','DWCD','CDPO') or hasAuthority('ROLE_VIEW_USERS')")
     @GetMapping("/users")
     @Operation(summary = "List users or fetch single user by passing username")
     public Mono<List<KcUserWithRole>> users(
@@ -92,7 +92,7 @@ public class UserController {
         return admin.searchUsers(username, first, max);
     }
 
-    @PreAuthorize("hasAnyRole('ADMIN','AWC','NODAL','SUPPLIER','SUPERVISOR') or hasAuthority('ROLE_MANAGE_ROLES')")
+    //@PreAuthorize("hasAnyRole('ADMIN','AWC','NODAL','SUPPLIER','SUPERVISOR') or hasAuthority('ROLE_MANAGE_ROLES')")
     @GetMapping("/users/by-role")
     @Operation(summary = "Search users by role")
     public Mono<List<KcUserWithRole>> getUsersByRole(
